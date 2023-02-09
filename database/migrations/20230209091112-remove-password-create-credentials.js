@@ -13,14 +13,9 @@ module.exports = {
     await queryInterface.createTable("credentials", {
       id: {
         allowNull: false,
+        autoIncrement: true,
         type: Sequelize.INTEGER,
         primaryKey: true
-        // references: {
-        //   model: "users",
-        //   key: "id"
-        // },
-        // onUpdate: "CASCADE",
-        // onDelete: "CASCADE"
       },
       userid: {
         allowNull: false,
@@ -31,9 +26,6 @@ module.exports = {
         },
         onUpdate: "CASCADE",
         onDelete: "CASCADE"
-      },
-      username: {
-        type: Sequelize.STRING
       },
       password: {
         type: Sequelize.TEXT

@@ -14,7 +14,9 @@ const createUser = async (username, fmno, firstname, lastname, email, phoneno, r
   };
   const encryptedPassword = await hashPass(password);
   const userDetails = await db.user.create(userData);
-  await db.credential.create({ userid: userDetails.id, password: encryptedPassword });
+  console.log("Hello");
+  const cred = await db.credential.create({ userid: userDetails.id, password: encryptedPassword });
+  console.log(cred);
   await sendInBlueUtil.sendEmail(email, firstname + " " + lastname, password);
 };
 module.exports = { createUser };
