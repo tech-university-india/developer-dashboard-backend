@@ -1,4 +1,4 @@
-"use strict";
+'use strict';
 
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
@@ -8,9 +8,9 @@ module.exports = {
     //   type: Sequelize.STRING
     // });
 
-    await queryInterface.removeColumn("users", "password");
+    await queryInterface.removeColumn('users', 'password');
 
-    await queryInterface.createTable("credentials", {
+    await queryInterface.createTable('credentials', {
       id: {
         allowNull: false,
         autoIncrement: true,
@@ -21,11 +21,11 @@ module.exports = {
         allowNull: false,
         type: Sequelize.INTEGER,
         references: {
-          model: "users",
-          key: "id"
+          model: 'users',
+          key: 'id'
         },
-        onUpdate: "CASCADE",
-        onDelete: "CASCADE"
+        onUpdate: 'CASCADE',
+        onDelete: 'CASCADE'
       },
       password: {
         type: Sequelize.TEXT
@@ -43,10 +43,10 @@ module.exports = {
 
   async down(queryInterface, Sequelize) {
 
-    await queryInterface.addColumn("users", "password", {
+    await queryInterface.addColumn('users', 'password', {
       type: Sequelize.TEXT
     });
 
-    await queryInterface.dropTable("credentials");
+    await queryInterface.dropTable('credentials');
   }
 };
