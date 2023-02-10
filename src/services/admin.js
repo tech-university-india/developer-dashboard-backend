@@ -1,6 +1,6 @@
-const sendInBlueUtil = require("../utils/sendinblue");
-const hashPass = require("../utils/hashPass");
-const db = require("../models/index");
+const sendInBlueUtil = require('../utils/sendinblue');
+const hashPass = require('../utils/hashPass');
+const db = require('../models/index');
 
 const createUser = async (username, fmno, firstname, lastname, email, phoneno, role, password) => {
   const userData = {
@@ -14,9 +14,9 @@ const createUser = async (username, fmno, firstname, lastname, email, phoneno, r
   };
   const encryptedPassword = await hashPass(password);
   const userDetails = await db.user.create(userData);
-  console.log("Hello");
+  console.log('Hello');
   const cred = await db.credential.create({ userid: userDetails.id, password: encryptedPassword });
   console.log(cred);
-  await sendInBlueUtil.sendEmail(email, firstname + " " + lastname, password);
+  await sendInBlueUtil.sendEmail(email, firstname + ' ' + lastname, password);
 };
 module.exports = { createUser };

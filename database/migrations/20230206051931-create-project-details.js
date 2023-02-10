@@ -10,7 +10,9 @@ module.exports = {
         type: Sequelize.INTEGER
       },
       project_id: {
-        type: Sequelize.STRING
+        type: Sequelize.STRING,
+        unique: true,
+        allowNull: false
       },
       project_name: {
         type: Sequelize.STRING
