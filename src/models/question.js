@@ -14,7 +14,7 @@ module.exports = (sequelize, DataTypes) => {
       this.hasOne(models.survey, {
         foreignKey: 'survey_id'
       });
-      this.hasMany(models.responses);
+      // this.hasMany(models.responses);
 
     }
   }
