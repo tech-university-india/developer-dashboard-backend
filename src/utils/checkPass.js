@@ -1,6 +1,6 @@
 
 //const hashPass = require("../utils/hashPass");
-const bcrypt = require("bcrypt");
+const bcrypt = require('bcrypt');
 
 const checkAuth = async (plaintext, hashedpass) => {
   const result = await bcrypt.compare(plaintext, hashedpass);

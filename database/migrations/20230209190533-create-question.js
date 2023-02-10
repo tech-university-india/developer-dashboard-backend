@@ -2,39 +2,27 @@
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.createTable('teams', {
+    await queryInterface.createTable('questions', {
       id: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-      project_id: {
-        type: Sequelize.STRING,
-        references: {
-          model: 'project_details',
-          key: 'project_id'
-        },
-        allowNull: false,
-        unique: true
-      },
-      username: {
-        type: Sequelize.STRING,
-        references: {
-          model: 'users',
-          key: 'username'
-        },
-        allowNull: false,
-        unique: true
-      },
-      emp_name: {
+      question_id: {
         type: Sequelize.STRING
       },
-      role: {
+      question_name: {
         type: Sequelize.STRING
       },
-      emp_status: {
+      survey_id: {
         type: Sequelize.STRING
+      },
+      min_rating: {
+        type: Sequelize.INTEGER
+      },
+      max_rating: {
+        type: Sequelize.INTEGER
       },
       createdAt: {
         allowNull: false,
@@ -47,6 +35,6 @@ module.exports = {
     });
   },
   async down(queryInterface, Sequelize) {
-    await queryInterface.dropTable('teams');
+    await queryInterface.dropTable('questions');
   }
 };
