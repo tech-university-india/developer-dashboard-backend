@@ -17,4 +17,21 @@ const createLeave = async (req, res) => {
     return res.status(500).json({ status: 500, message: error.message });
   }
 }; 
-module.exports = { createLeave }; 
+
+const deleteLeave = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const deleted = await leaveService.deleteLeave(id);
+    return res.status(200).json({
+      status: 200,
+      data: deleted,
+      message: "Succesfully Deleted Leave",
+    });
+  } catch (error) {
+    return res.status(500).json({ status: 500, message: error.message });
+  }
+};
+
+
+
+module.exports = { createLeave, deleteLeave }; 

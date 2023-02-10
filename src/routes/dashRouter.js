@@ -11,7 +11,10 @@ Router.route("/users/create").post(isAdmin, adminController.createUser);
 Router.post("/users/auth", checkAuth);
 
 Router.post("/leaves", leaveController.createLeave);
+Router.delete("/leave/:id", leaveController.deleteLeave);
 
 Router.post("/events", eventController.createEvent);
+Router.get("/events/:projectId", eventController.getEvents);
+Router.delete("/event/:id", eventController.deleteEvent);
 
 module.exports = Router;

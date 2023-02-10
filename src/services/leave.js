@@ -9,4 +9,14 @@ const createLeave = async (username,startDate, endDate) => {
   return result;
 };
 
-module.exports = { createLeave };
+const deleteLeave = async (id) => {
+  const result = await db.user_leaves.destroy({
+    where: {
+      id: id,
+    },
+  });
+  return result;
+};
+
+
+module.exports = { createLeave, deleteLeave };
