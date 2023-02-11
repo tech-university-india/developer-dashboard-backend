@@ -1,4 +1,4 @@
-const db = require("../models");
+const db = require('../models');
 
 const createLeave = async (username,startDate, endDate) => {
   const result = await db.user_leaves.create({

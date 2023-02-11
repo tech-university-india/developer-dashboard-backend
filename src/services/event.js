@@ -1,4 +1,4 @@
-const db = require("../models");
+const db = require('../models');
 
 const createEvent = async (eventId, projectId, eventName, startDate, endDate) => {
   const result = await db.project_events.create({

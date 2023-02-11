@@ -1,9 +1,9 @@
 /* eslint-disable no-mixed-spaces-and-tabs */
-const router = require("express").Router();
-const { validateRequest } = require("../middlewares/auth");
+const router = require('express').Router();
+const { validateRequest } = require('../middlewares/auth');
 
-const controller = require("../controllers/auth.js");
-router.post("/", validateRequest,controller);
+const controller = require('../controllers/auth.js');
+router.post('/', validateRequest,controller);
 module.exports = router;
 
 
