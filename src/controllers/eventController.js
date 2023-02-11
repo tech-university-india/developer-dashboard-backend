@@ -24,6 +24,12 @@ const getEvents = async (req, res) => {
   try {
     const { projectId } = req.params;
     const events = await eventService.getEvents(projectId);
+    if (events.length === 0) {
+      return res.status(404).json({
+        status: 404,
+        message: "Events Not Found",
+      });
+    }
     return res.status(200).json({ 
       status: 200, 
       data: events, 
@@ -37,6 +43,12 @@ const deleteEvent = async (req, res) => {
   try {
     const { id } = req.params;
     const deleted = await eventService.deleteEvent(id);
+    if (deleted[0] === 0) {
+      return res.status(404).json({ 
+        status: 404, 
+        message: "Event Not Found" 
+      });
+    }
     return res.status(200).json({
       status: 200,
       data: deleted,
