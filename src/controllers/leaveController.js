@@ -1,4 +1,4 @@
-const leaveService = require("../services/leave");
+const leaveService = require('../services/leave');
 
 const createLeave = async (req, res) => {
   try {
@@ -11,7 +11,7 @@ const createLeave = async (req, res) => {
     return res.status(201).json({
       status: 201,
       data: newLeave,
-      message: "Succesfully Created Leave",
+      message: 'Succesfully Created Leave',
     });
   } catch (error) {
     return res.status(500).json({ status: 500, message: error.message });
@@ -25,7 +25,7 @@ const deleteLeave = async (req, res) => {
     return res.status(200).json({
       status: 200,
       data: deleted,
-      message: "Succesfully Deleted Leave",
+      message: 'Succesfully Deleted Leave',
     });
   } catch (error) {
     return res.status(500).json({ status: 500, message: error.message });
