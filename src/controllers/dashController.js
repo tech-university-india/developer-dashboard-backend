@@ -1,5 +1,5 @@
 
-const dashService = require("../services/dashboard");
+const dashService = require('../services/dashboard');
 
 const getUsers = async (req, res) => {
   const users = await dashService.getUsers();
@@ -18,11 +18,11 @@ const checkAuth = async (req, res) => {
   //     res.status(401).json({message: "Invalid Credentials"});
   //   }
   if (!user) {
-    res.status(400).json({ message: "Bad Credentials. Check username or password" });
+    res.status(400).json({ message: 'Bad Credentials. Check username or password' });
     return;
   }
   else {
-    res.status(200).json({ message: "Valid Credentials" });
+    res.status(200).json({ message: 'Valid Credentials' });
     return;
   }
 };

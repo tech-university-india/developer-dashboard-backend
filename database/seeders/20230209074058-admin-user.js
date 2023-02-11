@@ -1,5 +1,5 @@
 /* eslint-disable no-unused-vars */
-"use strict";
+'use strict';
 
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
@@ -14,21 +14,21 @@ module.exports = {
      *   isBetaMember: false
      * }], {});
     */
-    await queryInterface.bulkInsert("users", [{
-      username: "admin",
+    await queryInterface.bulkInsert('users', [{
+      username: 'admin',
       fmno: 0,
-      firstname: "admin",
-      lastname: "",
-      email: "admin_dashboard@mckinsey.com",
-      phoneno: "0123456789",
-      role: "Admin",
+      firstname: 'admin',
+      lastname: '',
+      email: 'admin_dashboard@mckinsey.com',
+      phoneno: '0123456789',
+      role: 'Admin',
       createdAt: new Date(),
       updatedAt: new Date()
     }], { returning: true }).then((user) => {
       console.log(user);
-      return queryInterface.bulkInsert("credentials", [{
+      return queryInterface.bulkInsert('credentials', [{
         userid: user[0].id,
-        password: "admin",
+        password: 'admin',
         createdAt: new Date(),
         updatedAt: new Date()
       }], {});
@@ -36,9 +36,9 @@ module.exports = {
   },
 
   async down(queryInterface, Sequelize) {
-    return queryInterface.bulkDelete("credentials", null, {})
+    return queryInterface.bulkDelete('credentials', null, {})
       .then(() => {
-        return queryInterface.bulkDelete("users", null, {});
+        return queryInterface.bulkDelete('users', null, {});
       });
   }
 };

@@ -10,7 +10,11 @@ module.exports = {
         type: Sequelize.INTEGER
       },
       project_id: {
-        type: Sequelize.STRING
+        type: Sequelize.STRING,
+        references: {
+          model: 'project_details',
+          key: 'project_id'
+        }
       },
       event_id: {
         type: Sequelize.STRING

@@ -10,7 +10,11 @@ module.exports = {
         type: Sequelize.INTEGER
       },
       username: {
-        type: Sequelize.STRING
+        type: Sequelize.STRING,
+        references: {
+          model: 'teams',
+          key: 'username'
+        }
       },
       start_date: {
         type: Sequelize.DATEONLY

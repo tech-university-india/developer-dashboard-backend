@@ -1,6 +1,6 @@
 
-const db = require("../models");
-const checkPass = require("../utils/checkPass");
+const db = require('../models');
+const checkPass = require('../utils/checkPass');
 
 const getUsers = async () => {
   const result = await db.user.findAll();
