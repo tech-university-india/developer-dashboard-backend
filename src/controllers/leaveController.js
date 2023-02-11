@@ -22,6 +22,12 @@ const deleteLeave = async (req, res) => {
   try {
     const { id } = req.params;
     const deleted = await leaveService.deleteLeave(id);
+    if (deleted[0] === 0) {
+      return res.status(404).json({
+        status: 404,
+        message: 'Leave Not Found',
+      });
+    }
     return res.status(200).json({
       status: 200,
       data: deleted,
@@ -32,6 +38,24 @@ const deleteLeave = async (req, res) => {
   }
 };
 
+const getLeaves = async (req, res) => {
+  try {
+    const { username } = req.params;
+    const leaves = await leaveService.getLeaves(username);
+    if (leaves.length === 0) {
+      return res.status(404).json({
+        status: 404,
+        message: 'Leaves Not Found',
+      });
+    }
+    return res.status(200).json({
+      status: 200,
+      data: leaves,
+      message: 'Succesfully Retrieved Leaves',
+    });
+  } catch (error) {
+    return res.status(500).json({ status: 500, message: error.message });
+  }
+};
 
-
-module.exports = { createLeave, deleteLeave }; 
+module.exports = { createLeave, deleteLeave, getLeaves }; 

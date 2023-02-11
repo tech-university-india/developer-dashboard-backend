@@ -18,5 +18,13 @@ const deleteLeave = async (id) => {
   return result;
 };
 
+const getLeaves = async (username) => {
+  const result = await db.user_leaves.findAll({
+    where: {
+      username: username,
+    },
+  });
+  return result;
+};
 
-module.exports = { createLeave, deleteLeave };
+module.exports = { createLeave, deleteLeave, getLeaves};
