@@ -3,8 +3,9 @@ const httpErrors = require('../../errors/httpErrors');
 const teamService = require('../services/teamServices');
 const addMember = async (req, res) => {
   try {
-    const { project_id, username, role, emp_status } = req.body;
-    const teamMember = await teamService.addMember(project_id, username, role, emp_status);
+    const { project_id, username, emp_role, emp_status } = req.body;
+    console.log(project_id, username, emp_role, emp_status);
+    const teamMember = await teamService.addMember(project_id, username, emp_role, emp_status);
     res.status(201).json(teamMember);
   }
   catch (err) {
@@ -19,8 +20,8 @@ const addMember = async (req, res) => {
 
 const getTeam = async (req, res) => {
   try {
-    const { project_id } = req.body;
-    const team = await teamService.getTeam(project_id);
+    const { project_id, key, value } = req.body;
+    const team = await teamService.getTeam(project_id, key, value);
     res.status(200).json(team);
   }
   catch (err) {

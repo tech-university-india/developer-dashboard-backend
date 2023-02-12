@@ -26,14 +26,32 @@ const addMember = async (project_id, username, role, emp_status) => {
   return teamMember;
 };
 
-const getTeam = async (project_id) => {
+const getTeam = async (project_id, key, value) => {
   const validProject = await db.project_details.findOne({ where: { project_id: project_id } });
   if (!validProject) {
     throw new httpErrors('Invalid project id', 400);
   }
-  const team = await db.teams.findAll({ where: { project_id: project_id } });
-  if (!team) {
-    throw new httpErrors('No team members found', 400);
+  let team;
+  if (key === 'emp_status') {
+    team = await db.teams.findAll({ where: { project_id: project_id, emp_status: value } });
+    if (!team) {
+      throw new httpErrors('No employee with this status', 400);
+    }
+  } else if (key === 'role') {
+    team = await db.teams.findAll({ where: { project_id: project_id, role: value } });
+    if (!team) {
+      throw new httpErrors('No employee with this role', 400);
+    }
+  } else if (key === 'all') {
+    team = await db.teams.findAll({ where: { project_id: project_id } });
+    if (!team) {
+      throw new httpErrors('No employee in this project', 400);
+    }
+  } else {
+    team = await db.teams.findOne({ where: { project_id: project_id, username: value } });
+    if (!team) {
+      throw new httpErrors('No employee with this username', 400);
+    }
   }
   return team;
 };
