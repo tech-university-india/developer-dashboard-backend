@@ -1,29 +1,45 @@
+const httpErrors = require('../../errors/httpErrors');
 
 const dashService = require('../services/dashboard');
 
 const getUsers = async (req, res) => {
-  const users = await dashService.getUsers();
-  res.status(200).json(users);
+  try {
+    const users = await dashService.getUsers();
+    if (users.length === 0) {
+      throw new httpErrors('No users found', 404);
+    }
+    res.status(200).json(users);
+  }
+  catch (err) {
+    console.log(err);
+    if (err instanceof httpErrors) {
+      res.status(err.statusCode).json({ message: err.message });
+    }
+    else {
+      res.status(500).json({ message: 'Internal Server Error' });
+    }
+  }
 };
 
 const checkAuth = async (req, res) => {
-  const { username, password } = req.body;
-
-  const user = await dashService.checkAuth(username, password);
-
-  //   if(user){
-  //     res.status(200).json({message: "Valid Credentials"});
-  //   }
-  //   else{
-  //     res.status(401).json({message: "Invalid Credentials"});
-  //   }
-  if (!user) {
-    res.status(400).json({ message: 'Bad Credentials. Check username or password' });
-    return;
+  try {
+    const { username, password } = req.body;
+    const user = await dashService.checkAuth(username, password);
+    if (!user) {
+      throw new httpErrors('Invalid username or password', 400);
+    }
+    else {
+      res.status(200).json(user);
+    }
   }
-  else {
-    res.status(200).json({ message: 'Valid Credentials' });
-    return;
+  catch (err) {
+    if (err instanceof httpErrors) {
+      res.status(err.statusCode).json({ message: err.message });
+    }
+    else {
+      res.status(500).json({ message: 'Internal Server Error' });
+    }
+
   }
 };
 
