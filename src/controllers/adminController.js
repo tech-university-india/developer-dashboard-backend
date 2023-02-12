@@ -20,7 +20,7 @@ const createUser = async (request, response) => {
       role,
       `${firstname}@${fmno}`
     );
-    response.status(201).json({ status: 201, data: newUser, message: 'Succesfully  Created User' });
+    return response.status(201).json({ status: 201, data: newUser, message: 'Succesfully  Created User' });
   } catch (error) {
     response.status(500).json({ status: 500, message: error.message });
   }

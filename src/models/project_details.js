@@ -10,9 +10,6 @@ module.exports = (sequelize, DataTypes) => {
      * The `models/index` file will call this method automatically.
      */
     static associate(models) {
-      this.hasMany(models.project_events);
-      this.hasMany(models.survey);
-      // this.hasMany(models.teams);
     }
   }
   project_details.init({

@@ -9,6 +9,7 @@ const { teamValidator, getTeamValidator } = require('../middleware/teamValidator
 Router.get('/users', getUsers);
 Router.route('/users/create').post(isAdmin, adminController.createUser);
 Router.post('/users/auth', checkAuth);
+
 Router.post('/teams/create', teamValidator, addMember);
 Router.get('/teams', getTeamValidator, getTeam);
 module.exports = Router;

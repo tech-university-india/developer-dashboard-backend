@@ -1,4 +1,5 @@
 const httpErrors = require('../../errors/httpErrors');
+
 const dashService = require('../services/dashboard');
 
 const getUsers = async (req, res) => {
@@ -38,6 +39,7 @@ const checkAuth = async (req, res) => {
     else {
       res.status(500).json({ message: 'Internal Server Error' });
     }
+
   }
 };
 
