@@ -10,12 +10,22 @@ module.exports = (sequelize, DataTypes) => {
      * The `models/index` file will call this method automatically.
      */
     static associate(models) {
+      // association between teams and user
+      teams.belongsTo(models.user, {
+        foreignKey: 'username'
+      });
+      
+      // association between teams and project_details
+      teams.belongsTo(models.project_details, {
+        foreignKey: 'project_id',
+        sourceKey: 'project_id',
+        onUpdate: 'CASCADE'
+      });
     }
   }
   teams.init({
     project_id: DataTypes.STRING,
     username: DataTypes.STRING,
-    emp_name: DataTypes.STRING,
     role: DataTypes.STRING,
     emp_status: DataTypes.STRING
   }, {

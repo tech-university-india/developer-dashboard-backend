@@ -11,8 +11,12 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
-      this.hasOne(models.question, {
-        foreignKey: 'question_id'
+      // association between response and questions
+      response.belongsTo(models.questions, {
+        foreignKey: 'question_id',
+        sourceKey: 'question_id',
+        onDelete: 'CASCADE',
+        onUpdate: 'CASCADE'
       });
     }
   }

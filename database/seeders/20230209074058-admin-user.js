@@ -25,7 +25,7 @@ module.exports = {
       createdAt: new Date(),
       updatedAt: new Date()
     }], { returning: true }).then((user) => {
-      console.log(user);
+      // console.log(user);
       return queryInterface.bulkInsert('credentials', [{
         userid: user[0].id,
         password: 'admin',

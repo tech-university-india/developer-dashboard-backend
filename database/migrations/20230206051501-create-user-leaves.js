@@ -11,10 +11,10 @@ module.exports = {
       },
       username: {
         type: Sequelize.STRING,
-        references: {
-          model: 'teams',
-          key: 'username'
-        }
+        // references: {
+        //   model: 'teams',
+        //   key: 'username'
+        // }
       },
       start_date: {
         type: Sequelize.DATEONLY

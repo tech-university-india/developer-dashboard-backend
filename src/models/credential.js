@@ -11,14 +11,22 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
+      // association between credential and user
       credential.belongsTo(models.user, {
-        foreignKey: 'userid',
+        foreignKey: 'username'
       });
     }
   }
   credential.init({
-    userid: DataTypes.INTEGER,
-    password: DataTypes.TEXT
+    username: {
+      type:DataTypes.STRING,
+      allowNull: false,
+      primaryKey: true
+    },
+    password: {
+      type:DataTypes.STRING,
+      allowNull: false
+    }
   }, {
     sequelize,
     modelName: 'credential',
