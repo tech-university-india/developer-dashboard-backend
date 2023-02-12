@@ -4,7 +4,7 @@ const teamService = require('../services/teamServices');
 const addMember = async (req, res) => {
   try {
     const { project_id, username, emp_role, emp_status } = req.body;
-    console.log(project_id, username, emp_role, emp_status);
+    // console.log(project_id, username, emp_role, emp_status);
     const teamMember = await teamService.addMember(project_id, username, emp_role, emp_status);
     res.status(201).json(teamMember);
   }
