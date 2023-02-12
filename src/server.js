@@ -1,5 +1,4 @@
 
-/* eslint-disable quotes */
 const express = require("express");
 const config = require("config");
 const Router = require("./routes/dashRouter");
@@ -16,13 +15,12 @@ if(!config.get("jwtPrivateKey")){
 }
 
 app.use(express.json());
+app.use('/', Router);
 app.use("/auth", auth);
 app.use("/", verifyJWT, (req, res)=>{
   res.send("Hello World");
 });
-app.use("/", Router);
-
 
 app.listen(port, () =>
-  console.log(`Example app listening at http://localhost:${port}`)
+  console.log(`Dashboard BE listening at http://localhost:${port}`)
 );

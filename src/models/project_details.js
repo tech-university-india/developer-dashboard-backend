@@ -10,9 +10,6 @@ module.exports = (sequelize, DataTypes) => {
      * The `models/index` file will call this method automatically.
      */
     static associate(models) {
-      this.hasMany(models.project_events);
-      this.hasMany(models.survey);
-      this.hasMany(models.teams);
     }
   }
   project_details.init({
@@ -25,8 +22,7 @@ module.exports = (sequelize, DataTypes) => {
     jira: DataTypes.TEXT,
     misc: DataTypes.TEXT,
     start_date: DataTypes.DATEONLY,
-    end_date: DataTypes.DATEONLY,
-    pulsescore: DataTypes.INTEGER
+    end_date: DataTypes.DATEONLY
   }, {
     sequelize,
     modelName: 'project_details',

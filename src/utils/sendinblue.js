@@ -1,6 +1,6 @@
 //project_directory/emailBuilder.js
 
-var SibApiV3Sdk = require('sib-api-v3-sdk');
+const SibApiV3Sdk = require('sib-api-v3-sdk');
 SibApiV3Sdk.ApiClient.instance.authentications['api-key'].apiKey = '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';
 
 
