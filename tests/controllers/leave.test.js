@@ -199,11 +199,91 @@ describe('Leave Controller', () => {
       });
     });
   });
-});
 
+  describe('updateLeave', () => {
+    it('should return 200 status code when leave is updated', async () => {
+      jest.spyOn(leaveService, 'updateLeave').mockResolvedValue([1, [{
+        username: 'test user',
+        start_date: '2021-01-01',
+        end_date: '2021-01-01'
+      }]]);
 
+      const mockReq = {
+        params: {
+          id: 1
+        },
+        body: {
+          start_date: '2021-01-01',
+          end_date: '2021-01-01'
+        }
+      };
+      const mockRes = {
+        status: jest.fn().mockReturnThis(),
+        json: jest.fn()
+      };
 
+      await leaveController.updateLeave(mockReq, mockRes);
+      expect(mockRes.status).toBeCalledWith(200);
+      expect(mockRes.json).toBeCalledWith({
+        status: 200,
+        data: [{
+          username: 'test user',
+          start_date: '2021-01-01', 
+          end_date: '2021-01-01'
+        }],
+        message: 'Succesfully Updated Leave'
+      });
+    });
+
+    it('should return 500 status code when leave is not updated', async () => {
+      jest.spyOn(leaveService, 'updateLeave').mockRejectedValue(new Error('Error'));
+
+      const mockReq = {
+        params: {
+          id: 1
+        },
+        body: {
+          start_date: '2021-01-01',
+          end_date: '2021-01-01'
+        }
+      };
+      const mockRes = {
+        status: jest.fn().mockReturnThis(),
+        json: jest.fn()
+      };
+
+      await leaveController.updateLeave(mockReq, mockRes);
+      expect(mockRes.status).toBeCalledWith(500);
+      expect(mockRes.json).toBeCalledWith({
+        status: 500,
+        message: 'Error'
+      });
+    });
+
+    it('should return 404 status code when leave is not found', async () => {
+      jest.spyOn(leaveService, 'updateLeave').mockResolvedValue([0]);
+
+      const mockReq = {
+        params: {
+          id: 1
+        },
+        body: {
+          start_date: '2021-01-01',
+          end_date: '2021-01-01'
+        }
+      };
+      const mockRes = {
+        status: jest.fn().mockReturnThis(),
+        json: jest.fn()
+      };
+
+      await leaveController.updateLeave(mockReq, mockRes);
+      expect(mockRes.status).toBeCalledWith(404);
+      expect(mockRes.json).toBeCalledWith({
+        status: 404,
+        message: 'Leave Not Found'
+      });
+    });
+  });
   
-
-
-
+});

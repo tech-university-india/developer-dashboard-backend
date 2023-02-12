@@ -73,5 +73,40 @@ describe('Leave Service', () => {
       expect(result).rejects.toThrow('Error');
     });
   });
-});
 
+  describe('updateLeave', () => {
+    it('should update a leave', async () => {
+      jest.spyOn(db.user_leaves, 'update').mockResolvedValue([1, [{
+        username: 'test user',
+        start_date: '2021-01-01',
+        end_date: '2021-01-01',
+      }]]);
+
+      const result = await leaveService.updateLeave(
+        1,
+        {
+          startDate: '2021-01-01',
+          endDate: '2021-01-01',
+        }
+      );
+      expect(result).toEqual([1, [{
+        username: 'test user',
+        start_date: '2021-01-01',
+        end_date: '2021-01-01'
+      }]]);
+    });
+
+    it('should throw an error when leave is not updated', async () => {
+      jest.spyOn(db.user_leaves, 'update').mockRejectedValue(new Error('Error'));
+
+      const result = leaveService.updateLeave(
+        1,
+        {
+          startDate: '2021-01-01',
+          endDate: '2021-01-01',
+        }
+      );
+      expect(result).rejects.toThrow('Error');
+    });
+  });
+});

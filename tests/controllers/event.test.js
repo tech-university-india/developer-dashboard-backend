@@ -220,4 +220,92 @@ describe('Event Controller', () => {
       });
     });
   });
+
+  describe('updateEvent', () => {
+    it('should return 200 status code when the event is updated', async () => {
+      jest.spyOn(eventService, 'updateEvent').mockResolvedValue([1, [
+        {
+          eventId: 1,
+          projectId: 1,
+          eventName: 'Test Event',
+          startDate: '2021-01-01',
+          endDate: '2021-01-02'
+        }
+      ]]);
+      const mockReq = {
+        params: {
+          id: 1,
+        },
+        body: {
+          startDate: '2021-01-01',
+          endDate: '2021-01-02'
+        }
+      };
+      const mockRes = {
+        status: jest.fn().mockReturnThis(),
+        json: jest.fn()
+      };
+      await eventController.updateEvent(mockReq, mockRes);
+      expect(mockRes.status).toBeCalledWith(200);
+      expect(mockRes.json).toBeCalledWith({
+        status: 200,
+        data: [ 
+          {
+            eventId: 1,
+            projectId: 1,
+            eventName: 'Test Event',
+            startDate: '2021-01-01',
+            endDate: '2021-01-02'
+          }
+        ],
+        message: 'Succesfully Updated Event',
+      });
+    });
+
+    it('should return 404 status code when the event does not exist', async () => {
+      jest.spyOn(eventService, 'updateEvent').mockResolvedValue([0]);
+      const mockReq = {
+        params: {
+          id: 1,
+        },
+        body: {
+          startDate: '2021-01-01',
+          endDate: '2021-01-02'
+        }
+      };
+      const mockRes = {
+        status: jest.fn().mockReturnThis(),
+        json: jest.fn()
+      };
+      await eventController.updateEvent(mockReq, mockRes);
+      expect(mockRes.status).toBeCalledWith(404);
+      expect(mockRes.json).toBeCalledWith({
+        status: 404,
+        message: 'Event Not Found',
+      });
+    });
+
+    it('should return 500 status code when error occurs', async () => {
+      jest.spyOn(eventService, 'updateEvent').mockRejectedValue(new Error('Error'));
+      const mockReq = {
+        params: {
+          id: 1,
+        },
+        body: {
+          startDate: '2021-01-01',
+          endDate: '2021-01-02'
+        }
+      };
+      const mockRes = {
+        status: jest.fn().mockReturnThis(),
+        json: jest.fn()
+      };
+      await eventController.updateEvent(mockReq, mockRes);
+      expect(mockRes.status).toBeCalledWith(500);
+      expect(mockRes.json).toBeCalledWith({
+        status: 500,
+        message: 'Error',
+      });
+    });
+  });
 });

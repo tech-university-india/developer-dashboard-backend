@@ -103,4 +103,51 @@ describe('Event Service', () => {
       expect(result).rejects.toThrow('Error');
     });
   });
+
+  describe('updateEvent', () => {
+    it('should update an event', async () => {
+      jest.spyOn(db.project_events, 'update').mockResolvedValue([
+        1,
+        [
+          {
+            event_id: 1,
+            project_id: 1,
+            event_name: 'Test Event',
+            start_date: '2021-01-01',
+            end_date: '2021-01-01',
+          },
+        ],
+      ]);
+
+      const result = await eventService.updateEvent(1, {
+        start_date: '2021-01-01',
+        end_date: '2021-01-01',
+      });
+      expect(result).toEqual([
+        1,
+        [
+          {
+            event_id: 1,
+            project_id: 1,
+            event_name: 'Test Event',
+            start_date: '2021-01-01',
+            end_date: '2021-01-01',
+          },
+        ],
+      ]);
+    });
+
+    it('should throw an error when event is not updated', async () => {
+      jest.spyOn(db.project_events, 'update').mockRejectedValue(new Error('Error'));
+      
+      const result = eventService.updateEvent(1, {
+        event_id: 1,
+        project_id: 1,
+        event_name: 'Test Event',
+        start_date: '2021-01-01',
+        end_date: '2021-01-01',
+      });
+      expect(result).rejects.toThrow('Error');
+    });
+  });
 });

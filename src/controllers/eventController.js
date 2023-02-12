@@ -39,6 +39,27 @@ const getEvents = async (req, res) => {
   }
 };
 
+const updateEvent = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const newEvent = req.body;
+    const updated = await eventService.updateEvent(id, newEvent);
+    if (updated[0] === 0) {
+      return res.status(404).json({
+        status: 404,
+        message: 'Event Not Found',
+      });
+    }
+    return res.status(200).json({
+      status: 200,
+      data: updated[1],
+      message: 'Succesfully Updated Event',
+    });
+  } catch (error) {
+    return res.status(500).json({ status: 500, message: error.message });
+  }
+};
+
 const deleteEvent = async (req, res) => {
   try {
     const { id } = req.params;
@@ -59,4 +80,4 @@ const deleteEvent = async (req, res) => {
   }
 };
 
-module.exports = { createEvent, deleteEvent, getEvents};
+module.exports = { createEvent, deleteEvent, getEvents, updateEvent };
