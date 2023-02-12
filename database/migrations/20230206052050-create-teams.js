@@ -16,7 +16,7 @@ module.exports = {
           key: 'project_id'
         },
         allowNull: false,
-        unique: true
+        // unique: true
       },
       username: {
         type: Sequelize.STRING,
@@ -25,7 +25,7 @@ module.exports = {
           key: 'username'
         },
         allowNull: false,
-        unique: true
+        // unique: true
       },
       emp_name: {
         type: Sequelize.STRING

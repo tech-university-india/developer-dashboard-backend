@@ -10,6 +10,7 @@ const getUsers = async (req, res) => {
     res.status(200).json(users);
   }
   catch (err) {
+    console.log(err);
     if (err instanceof httpErrors) {
       res.status(err.statusCode).json({ message: err.message });
     }
