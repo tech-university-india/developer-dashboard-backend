@@ -1,13 +1,13 @@
-const auth = require("../../src/controllers/auth");
-jest.mock("../../src/services/auth.js");
-let services = require("../../src/services/auth.js");
-const jwt = require("jsonwebtoken");
-const config = require("config");
+const {authenticateUser, refreshAccessToken} = require('../../src/controllers/auth');
+jest.mock('../../src/services/auth.js');
+let services = require('../../src/services/auth.js');
+const jwt = require('jsonwebtoken');
+const config = require('config');
 
 
 
-describe("auth", ()=>{
-  it("should give 400 status when token is not generated", async ()=>{
+describe('authenticateUser', ()=>{
+  it('should give 400 status when token is not generated', async ()=>{
     const mockReq = {
       body:{
 
@@ -18,15 +18,15 @@ describe("auth", ()=>{
       send: jest.fn()
     };
 
-    services.mockImplementation(()=>{
-      return "Invalid id or password.";
+    services.authenticateUser.mockImplementation(()=>{
+      return 'Invalid id or password.';
     });
       
-    await auth(mockReq, mockRes);
+    await authenticateUser(mockReq, mockRes);
     expect(mockRes.status).toBeCalledWith(400);
   });
  
-  it("should give 200 status when token is generated", async ()=>{
+  it('should give 200 status when token is generated', async ()=>{
     const mockReq = {
       body:{
 
@@ -34,14 +34,69 @@ describe("auth", ()=>{
     };
     const mockRes = {
       status: jest.fn().mockReturnThis(),
-      send: jest.fn()
+      send: jest.fn(),
+      cookie: jest.fn()
     };
 
-    services.mockImplementation(()=>{
-      return jwt.sign({ username: "abc" }, config.get("jwtPrivateKey"), {expiresIn: "20m"});
+    services.authenticateUser.mockImplementation(()=>{
+      return jwt.sign({ username: 'abc' }, config.get('jwtPrivateKey'), {expiresIn: '20m'});
     });
   
-    await auth(mockReq, mockRes);
+    await authenticateUser(mockReq, mockRes);
+    expect(mockRes.status).toBeCalledWith(200);
+    expect(mockRes.cookie).toBeCalled();
+  });
+});
+
+describe('refreshAccessToken', ()=>{
+  it('should return 400 status when no refresh token is provided', async ()=>{
+    const mockReq = {
+      cookies: {
+      }
+    };
+    const mockRes = {
+      status: jest.fn().mockReturnThis(),
+      send: jest.fn()
+    };
+    await refreshAccessToken(mockReq, mockRes);
+    expect(mockRes.status).toBeCalledWith(400);
+  });
+
+  it('should return 400 status when invalid refresh token is provided', async()=>{
+    const mockReq = {
+      cookies: {
+        jwt: 'abc'
+      }
+    };
+    const mockRes = {
+      status: jest.fn().mockReturnThis(),
+      send: jest.fn()
+    };
+    
+    services.refreshAccessToken.mockImplementation(()=>{
+      return 'Invalid refresh token.';
+    });
+
+    await refreshAccessToken(mockReq, mockRes);
+    expect(mockRes.status).toBeCalledWith(400);
+  });
+
+  it('should return 200 status when valid refresh token is provided', async ()=>{
+    const mockReq = {
+      cookies: {
+        jwt: 'abc'
+      }
+    };
+    const mockRes = {
+      status: jest.fn().mockReturnThis(),
+      send: jest.fn()
+    };
+    services.refreshAccessToken.mockImplementation(()=>{
+      return 'abcd';
+    });
+
+    await refreshAccessToken(mockReq, mockRes);
     expect(mockRes.status).toBeCalledWith(200);
   });
+
 });

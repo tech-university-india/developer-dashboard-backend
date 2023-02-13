@@ -1,12 +1,12 @@
-const {validateRequest, verifyJWT} = require("../../src/middlewares/auth");
-const jwt = require("jsonwebtoken");
-const config = require("config");
+const {validateRequest, verifyJWT, isAdmin, isDeveloper, isManager, isSuperManager} = require('../../src/middlewares/auth');
+const jwt = require('jsonwebtoken');
+const config = require('config');
 
-describe("validateRequest", ()=>{
-  it("should return bad request when username is not provided", ()=>{
+describe('validateRequest', ()=>{
+  it('should return bad request when username is not provided', ()=>{
     const mockReq={
       body:{
-        password:"1234"
+        password:'1234'
       }
     };
     const mockRes={
@@ -20,10 +20,10 @@ describe("validateRequest", ()=>{
     expect(mockRes.status).toBeCalledWith(400);
   });
   
-  it("should return bad request when password is not provided", ()=>{
+  it('should return bad request when password is not provided', ()=>{
     const mockReq={
       body:{
-        username: "abc"
+        username: 'abc'
       }
     };
     const mockRes={
@@ -37,11 +37,11 @@ describe("validateRequest", ()=>{
     expect(mockRes.status).toBeCalledWith(400);
   });
   
-  it("should call next when username and password are provided", ()=>{
+  it('should call next when username and password are provided', ()=>{
     const mockReq={
       body:{
-        username: "abc",
-        password: "123"
+        username: 'abc',
+        password: '123'
       }
     };
     const mockRes={
@@ -56,8 +56,8 @@ describe("validateRequest", ()=>{
   });
 });
 
-describe("verifyJWT", ()=>{
-  it("should return 401 when token is not provided", ()=>{
+describe('verifyJWT', ()=>{
+  it('should return 401 when token is not provided', ()=>{
     const mockReq = {
       header: jest.fn().mockReturnValue(undefined)
     };
@@ -71,9 +71,9 @@ describe("verifyJWT", ()=>{
     expect(mockRes.status).toBeCalledWith(401);
   });
 
-  it("should return 400 when wrong token is provided", ()=>{
+  it('should return 400 when wrong token is provided', ()=>{
     const mockReq = {
-      header: jest.fn().mockReturnValue("abcd")
+      header: jest.fn().mockReturnValue('abcd')
     };
     const mockRes = {
       status: jest.fn().mockReturnThis(),
@@ -85,10 +85,10 @@ describe("verifyJWT", ()=>{
     expect(mockRes.status).toBeCalledWith(400);
   });
 
-  it("should call next when valid token is provided", ()=>{
+  it('should call next when valid token is provided', ()=>{
     const mockReq = {
       header: jest.fn().mockReturnValue(
-        jwt.sign({ username: "abcd" }, config.get("jwtPrivateKey"), {expiresIn: "20m"})
+        jwt.sign({ username: 'abcd' }, config.get('jwtPrivateKey'), {expiresIn: '20m'})
       )
     };
     const mockRes = {
@@ -100,5 +100,137 @@ describe("verifyJWT", ()=>{
     verifyJWT(mockReq, mockRes, next);
     expect(next).toBeCalledWith();
   });
+});
 
+describe('isAdmin', ()=>{
+  it('should return 403 status when user is not admin', ()=>{
+    const mockReq={
+      user:{
+        role: 'developer'
+      }
+    };
+    const mockRes = {
+      status: jest.fn().mockReturnThis(),
+      send: jest.fn()
+    };
+    const next = jest.fn();
+
+    isAdmin(mockReq, mockRes, next);
+    expect(mockRes.status).toBeCalledWith(403);
+  });
+  it('should call next when user is admin', ()=>{
+    const mockReq={
+      user:{
+        role: 'admin'
+      }
+    };
+    const mockRes = {
+      status: jest.fn().mockReturnThis(),
+      send: jest.fn(),
+    };
+    const next = jest.fn();
+
+    isAdmin(mockReq, mockRes, next);
+    expect(next).toBeCalled();
+  });
+});
+
+
+describe('isDeveloper', ()=>{
+  it('should return 403 status when user is not developer', ()=>{
+    const mockReq={
+      user:{
+        role: 'admin'
+      }
+    };
+    const mockRes = {
+      status: jest.fn().mockReturnThis(),
+      send: jest.fn()
+    };
+    const next = jest.fn();
+
+    isDeveloper(mockReq, mockRes, next);
+    expect(mockRes.status).toBeCalledWith(403);
+  });
+  it('should call next when user is developer', ()=>{
+    const mockReq={
+      user:{
+        role: 'developer'
+      }
+    };
+    const mockRes = {
+      status: jest.fn().mockReturnThis(),
+      send: jest.fn(),
+    };
+    const next = jest.fn();
+
+    isDeveloper(mockReq, mockRes, next);
+    expect(next).toBeCalled();
+  });
+});
+
+describe('isManager', ()=>{
+  it('should return 403 status when user is not manager', ()=>{
+    const mockReq={
+      user:{
+        role: 'admin'
+      }
+    };
+    const mockRes = {
+      status: jest.fn().mockReturnThis(),
+      send: jest.fn()
+    };
+    const next = jest.fn();
+
+    isManager(mockReq, mockRes, next);
+    expect(mockRes.status).toBeCalledWith(403);
+  });
+  it('should call next when user is manager', ()=>{
+    const mockReq={
+      user:{
+        role: 'manager'
+      }
+    };
+    const mockRes = {
+      status: jest.fn().mockReturnThis(),
+      send: jest.fn(),
+    };
+    const next = jest.fn();
+
+    isManager(mockReq, mockRes, next);
+    expect(next).toBeCalled();
+  });
+});
+
+describe('isSuperManager', ()=>{
+  it('should return 403 status when user is not super manager', ()=>{
+    const mockReq={
+      user:{
+        role: 'admin'
+      }
+    };
+    const mockRes = {
+      status: jest.fn().mockReturnThis(),
+      send: jest.fn()
+    };
+    const next = jest.fn();
+
+    isSuperManager(mockReq, mockRes, next);
+    expect(mockRes.status).toBeCalledWith(403);
+  });
+  it('should call next when user is super manager', ()=>{
+    const mockReq={
+      user:{
+        role: 'super manager'
+      }
+    };
+    const mockRes = {
+      status: jest.fn().mockReturnThis(),
+      send: jest.fn()
+    };
+    const next = jest.fn();
+
+    isSuperManager(mockReq, mockRes, next);
+    expect(next).toBeCalled();
+  });
 });
