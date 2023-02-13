@@ -11,7 +11,7 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // association between project_details and project_events
-      project_details.hasMany(models.project_events, {
+      this.hasMany(models.project_events, {
         foreignKey: 'project_id',
         sourceKey: 'project_id',
         onDelete: 'CASCADE',
@@ -19,13 +19,14 @@ module.exports = (sequelize, DataTypes) => {
       });
 
       // association between project_details and teams
-      project_details.hasOne(models.teams, {
+      this.hasOne(models.teams, {
         foreignKey: 'project_id',
         sourceKey: 'project_id',
         onDelete: 'CASCADE',
         onUpdate: 'CASCADE'
 
       });
+
     }
   }
   project_details.init({

@@ -11,13 +11,19 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
-      user.hasOne(models.credential, { 
+      this.hasOne(models.credential, { 
 
         foreignKey: 'username',
         sourceKey: 'username',
         onDelete: 'CASCADE',
         onUpdate: 'CASCADE'
 
+      });
+
+      this.belongsToMany(models.teams, {
+        through: 'teams',
+        foreignKey: 'username',
+        otherKey: 'project_id'
       });
     }
   }

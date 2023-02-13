@@ -12,13 +12,13 @@ module.exports = (sequelize, DataTypes) => {
     static associate(models) {
 
       // association between survey and project_details
-      survey.belongsTo(models.project_details, {
+      this.belongsTo(models.project_details, {
         foreignKey: 'project_id',
         sourceKey: 'project_id',
       });
 
       // association between survey and questions
-      survey.hasMany(models.questions, {
+      this.hasMany(models.questions, {
         foreignKey: 'survey_id',
         sourceKey: 'survey_id',
         onDelete: 'CASCADE',

@@ -12,7 +12,7 @@ module.exports = (sequelize, DataTypes) => {
     static associate(models) {
       // define association here
       // association between user_leaves and teams
-      user_leaves.belongsTo(models.teams, {
+      this.belongsTo(models.teams, {
         foreignKey: 'username'
       });
       

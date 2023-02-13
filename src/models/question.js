@@ -11,9 +11,19 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // association between question and survey
-      question.belongsTo(models.survey, {
+
+      this.belongsTo(models.survey, {
         foreignKey: 'survey_id',
         sourceKey: 'survey_id',
+        onDelete: 'CASCADE',
+        onUpdate: 'CASCADE'
+      });
+
+      // association between question and response
+
+      this.hasMany(models.response, {
+        foreignKey: 'question_id',
+        sourceKey: 'question_id',
         onDelete: 'CASCADE',
         onUpdate: 'CASCADE'
       });
