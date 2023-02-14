@@ -1,6 +1,6 @@
 const sendInBlueUtil = require('../utils/sendinblue');
 const hashPass = require('../utils/hashPass');
-const db = require('../models/index');
+const db = require('../models');
 
 const createUser = async (username, fmno, firstname, lastname, email, phoneno, role, password) => {
   const userData = {

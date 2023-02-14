@@ -1,15 +1,20 @@
 // addMember, getTeam  getTeamByProjectId, getTeamByUserName, getTeamByRole
-const httpErrors = require('../../errors/httpErrors');
+const HTTPErrors = require('../../errors/httpErrors');
 const projectService = require('../services/projectService');
 
 // create a new project for project_details model 
 
 const createProject = async (req, res, next) => {
   try {
+    
     const project = await projectService.createProject(req.body);
     res.status(201).json(project);
-  } catch (error) {
-    next(error);
+  } catch(error) {
+    next();
+    if (error instanceof HTTPErrors) {
+      res.status(error.code).json({ 'message': error.message });
+    }
+    res.status(500).json({ message: error.message });
   }
 };
 
@@ -19,8 +24,12 @@ const getAllProjects = async (req, res, next) => {
   try {
     const projects = await projectService.getAllProjects();
     res.status(200).json(projects);
-  } catch (error) {
-    next(error);
+  } catch(error) {
+    next();
+    if (error instanceof HTTPErrors) {
+      res.status(error.code).json({ 'message': error.message });
+    }
+    res.status(500).json({ message: error.message });
   }
 };
 
@@ -30,8 +39,12 @@ const getProjectById = async (req, res, next) => {
   try {
     const project = await projectService.getProjectById(req.params.project_id);
     res.status(200).json(project);
-  } catch (error) {
-    next(error);
+  } catch(error) {
+    next();
+    if (error instanceof HTTPErrors) {
+      res.status(error.code).json({ 'message': error.message });
+    }
+    res.status(500).json({ message: error.message });
   }
 };
 
@@ -42,8 +55,12 @@ const updateProjectById = async (req, res, next) => {
     const project = await projectService.updateProjectById(req.params.project_id, req.body);
     res.status(200).json(project);
   }
-  catch (error) {
-    next(error);
+  catch(error) {
+    next();
+    if (error instanceof HTTPErrors) {
+      res.status(error.code).json({ 'message': error.message });
+    }
+    res.status(500).json({ message: error.message });
   }
 };
 
@@ -53,8 +70,12 @@ const deleteProjectById = async (req, res, next) => {
   try {
     const project = await projectService.deleteProjectById(req.params.project_id);
     res.status(200).json(project);
-  } catch (error) {
-    next(error);
+  } catch(error) {
+    next();
+    if (error instanceof HTTPErrors) {
+      res.status(error.code).json({ 'message': error.message });
+    }
+    res.status(500).json({ message: error.message });
   }
 };
 

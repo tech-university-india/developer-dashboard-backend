@@ -1,13 +1,23 @@
 // services for project details
-const db = require('../database/models');
-const httpErrors = require('../errors/httpErrors');
+const db = require('../models');
+const httpErrors = require('../../errors/httpErrors');
 
 // create a new project for project_details model
 
 const createProject = async (project) => {
-  const newProject = await db.project_details.create(project);
-
-
+  const projectDetails = {
+    project_id: project.project_id,
+    project_name: project.project_name,
+    client: project.client,
+    poc: project.poc,
+    description: project.description,
+    github: project.github,
+    jira: project.jira,
+    misc: project.misc,
+    start_date: project.start_date,
+    end_date: project.end_date
+  };
+  const newProject = await db.project_details.create(projectDetails);
   return newProject;
 };
 
