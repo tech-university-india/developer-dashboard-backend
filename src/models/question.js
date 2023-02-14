@@ -19,8 +19,6 @@ module.exports = (sequelize, DataTypes) => {
         onUpdate: 'CASCADE'
       });
 
-      // association between question and response
-
       this.hasMany(models.response, {
         foreignKey: 'question_id',
         sourceKey: 'question_id',

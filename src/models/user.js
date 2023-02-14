@@ -12,7 +12,6 @@ module.exports = (sequelize, DataTypes) => {
     static associate(models) {
       // define association here
       this.hasOne(models.credential, { 
-
         foreignKey: 'username',
         sourceKey: 'username',
         onDelete: 'CASCADE',
@@ -21,7 +20,7 @@ module.exports = (sequelize, DataTypes) => {
       });
 
       this.belongsToMany(models.teams, {
-        through: 'teams',
+        through: 'models.teams',
         foreignKey: 'username',
         otherKey: 'project_id'
       });

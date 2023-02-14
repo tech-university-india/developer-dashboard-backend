@@ -18,7 +18,7 @@ module.exports = (sequelize, DataTypes) => {
       });
 
       // association between survey and questions
-      this.hasMany(models.questions, {
+      this.hasMany(models.question, {
         foreignKey: 'survey_id',
         sourceKey: 'survey_id',
         onDelete: 'CASCADE',
