@@ -5,7 +5,7 @@
     "database": "developer_dashboard",
     "host": "127.0.0.1",
     "dialect": "postgres",
-    "port": 5432
+    "port": 6000
   },
   "test": {
     "username": "postgres",
@@ -13,6 +13,6 @@
     "database": "developer_dashboard",
     "host": "127.0.0.1",
     "dialect": "postgres",
-    "port": 5432
+    "port": 6000
   }
 }
