@@ -1,12 +1,13 @@
-
 const express = require('express');
 // const config = require('../config/default.json');
 const dashRouter = require('./routes/dashRouter');
 const projectRouter = require('./routes/projectRouter');
-
+const eventsRouter = require('./routes/eventsRouter');
+const leavesRouter = require('./routes/leavesRouter');
 
 const app = express();
 const port = 3000;
+
 // const {verifyJWT} = require('./middlewares/auth');
 // const auth = require('./routes/auth.js');
 
@@ -17,8 +18,12 @@ const port = 3000;
 // }
 
 app.use(express.json());
+
+app.use('/events', eventsRouter);
+app.use('/leaves', leavesRouter);
 app.use('/dashboard', dashRouter);
 app.use('/projects', projectRouter);
+
 // app.use('/auth', auth);
 // app.use('/', verifyJWT, (req, res)=>{
 //   res.send('Hello World');
