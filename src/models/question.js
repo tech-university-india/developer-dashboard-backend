@@ -10,9 +10,24 @@ module.exports = (sequelize, DataTypes) => {
      * The `models/index` file will call this method automatically.
      */
     static associate(models) {
+      // association between question and survey
 
+      this.belongsTo(models.survey, {
+        foreignKey: 'survey_id',
+        sourceKey: 'survey_id',
+        onDelete: 'CASCADE',
+        onUpdate: 'CASCADE'
+      });
+
+      this.hasMany(models.response, {
+        foreignKey: 'question_id',
+        sourceKey: 'question_id',
+        onDelete: 'CASCADE',
+        onUpdate: 'CASCADE'
+      });
     }
   }
+
   question.init({
     question_id: DataTypes.STRING,
     question_name: DataTypes.STRING,

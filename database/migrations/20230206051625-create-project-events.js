@@ -11,10 +11,10 @@ module.exports = {
       },
       project_id: {
         type: Sequelize.STRING,
-        references: {
-          model: 'project_details',
-          key: 'project_id'
-        }
+        // references: {
+        //   model: 'project_details',
+        //   key: 'project_id'
+        // }
       },
       event_id: {
         type: Sequelize.STRING

@@ -11,8 +11,11 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
-      this.hasOne(models.project_details, {
-        foreignKey: 'project_id'
+      this.belongsTo(models.project_details, {
+        foreignKey: 'project_id',
+        sourceKey: 'project_id',
+        onDelete: 'CASCADE',
+        onUpdate: 'CASCADE'
       });
     }
   }
