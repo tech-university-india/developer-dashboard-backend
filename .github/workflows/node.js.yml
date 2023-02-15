@@ -19,3 +19,8 @@ jobs:
       run: npm install jest
     - name: Run unit tests
       run: npm test
+    - name: Lint Check
+      uses: wearerequired/lint-action@v2.3.0
+    - name: Vulnerability Check
+      run: npm audit
+
