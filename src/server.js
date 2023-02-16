@@ -16,6 +16,10 @@ const port = 3000;
 //   console.error('FATAL ERROR: jwtPrivateKey is not defined');
 //   process.exit(1);
 // }
+const swaggerUi = require('swagger-ui-express');
+const swaggerDocument = require('./swagger.json');
+
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
 app.use(express.json());
 
