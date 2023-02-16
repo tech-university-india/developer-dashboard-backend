@@ -18,6 +18,9 @@ module.exports = {
       fmno: {
         type: Sequelize.INTEGER
       },
+      github: {
+        type: Sequelize.STRING
+      },
       firstname: {
         type: Sequelize.STRING
       },

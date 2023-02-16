@@ -4,6 +4,7 @@ const dashRouter = require('./routes/dashRouter');
 const projectRouter = require('./routes/projectRouter');
 const eventsRouter = require('./routes/eventsRouter');
 const leavesRouter = require('./routes/leavesRouter');
+const adminRouter = require('./routes/adminRouter');
 
 const app = express();
 const port = 3000;
@@ -22,7 +23,7 @@ const swaggerDocument = require('./swagger.json');
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
 app.use(express.json());
-
+app.use('/admin', adminRouter);
 app.use('/events', eventsRouter);
 app.use('/leaves', leavesRouter);
 app.use('/dashboard', dashRouter);
