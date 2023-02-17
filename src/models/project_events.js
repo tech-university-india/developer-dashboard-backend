@@ -10,10 +10,15 @@ module.exports = (sequelize, DataTypes) => {
      * The `models/index` file will call this method automatically.
      */
     static associate(models) {
-    //   // define association here
-    //   this.hasOne(models.project_details, {
-    //     foreignKey: 'project_id'
-    //   });
+
+      // define association here
+      this.belongsTo(models.project_details, {
+        foreignKey: 'project_id',
+        sourceKey: 'project_id',
+        onDelete: 'CASCADE',
+        onUpdate: 'CASCADE'
+      });
+
     }
   }
   project_events.init({

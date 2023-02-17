@@ -1,3 +1,4 @@
+
 const {authenticateUser, refreshAccessToken} = require('../../src/controllers/auth');
 jest.mock('../../src/services/auth.js');
 let services = require('../../src/services/auth.js');
@@ -7,6 +8,7 @@ const config = require('config');
 
 
 describe('authenticateUser', ()=>{
+
   it('should give 400 status when token is not generated', async ()=>{
     const mockReq = {
       body:{
@@ -17,7 +19,6 @@ describe('authenticateUser', ()=>{
       status: jest.fn().mockReturnThis(),
       send: jest.fn()
     };
-
     services.authenticateUser.mockImplementation(()=>{
       return 'Invalid id or password.';
     });
@@ -39,6 +40,7 @@ describe('authenticateUser', ()=>{
     };
 
     services.authenticateUser.mockImplementation(()=>{
+
       return jwt.sign({ username: 'abc' }, config.get('jwtPrivateKey'), {expiresIn: '20m'});
     });
   

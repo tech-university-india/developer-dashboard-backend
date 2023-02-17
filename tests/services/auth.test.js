@@ -1,3 +1,4 @@
+
 const {authenticateUser, refreshAccessToken} = require('../../src/services/auth.js');
 const UserAuth = require('../../src/models').userAuth;
 const User = require('../../src/models').user;
@@ -13,9 +14,8 @@ describe('authenticateUser', () => {
       password: 'xyz'
     };
 
-    const salt = await bcrypt.genSalt(10);
-    const hashedPassword = await bcrypt.hash(mockReqBody.password, salt);
-
+  //   const salt = await bcrypt.genSalt(10);
+  //   const hashedPassword = await bcrypt.hash(mockReqBody.password, salt);
     const returnValue = {
       dataValues: {
         username: 'abc',
@@ -87,5 +87,4 @@ describe('refreshAccessToken', ()=>{
     const result = await refreshAccessToken('abcd');
     expect(result).toBe('Invalid refresh token.');
   });
-
 });

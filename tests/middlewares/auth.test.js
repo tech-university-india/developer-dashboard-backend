@@ -1,4 +1,5 @@
 const {validateRequest, verifyJWT, isAdmin, isDeveloper, isManager, isSuperManager} = require('../../src/middlewares/auth');
+
 const jwt = require('jsonwebtoken');
 const config = require('config');
 

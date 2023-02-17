@@ -10,9 +10,22 @@ module.exports = (sequelize, DataTypes) => {
      * The `models/index` file will call this method automatically.
      */
     static associate(models) {
-    //   // define association here
-    //   user.hasOne(models.credential, { foreignKey: 'userid' });
-    //   this.belongsTo(models.teams);
+
+      // define association here
+      this.hasOne(models.credential, { 
+        foreignKey: 'username',
+        sourceKey: 'username',
+        onDelete: 'CASCADE',
+        onUpdate: 'CASCADE'
+
+      });
+
+      this.belongsToMany(models.teams, {
+        through: 'models.teams',
+        foreignKey: 'username',
+        otherKey: 'project_id'
+      });
+
     }
   }
   user.init({
@@ -20,6 +33,7 @@ module.exports = (sequelize, DataTypes) => {
     fmno: DataTypes.INTEGER,
     firstname: DataTypes.STRING,
     lastname: DataTypes.STRING,
+    github: DataTypes.TEXT,
     email: DataTypes.STRING,
     phoneno: DataTypes.STRING,
     role: DataTypes.STRING,

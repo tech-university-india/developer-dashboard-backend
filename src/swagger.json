@@ -1,0 +1,359 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "version": "1.0.0",
+    "title": "jct-ms-common",
+    "description": "Service that serves Rest API request common"
+  },
+  "host": "localhost:8090",
+  "basePath": "/api/ms-common",
+  "schemes": ["http"],
+  "security": [
+    {
+      "Bearer": []
+    }
+  ],
+  "paths": {
+    
+    "/admin/users": {
+      "post":{
+        "summary": "Create user",
+        "tags": ["Admin"],
+        "requestBody":  {
+          "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/UserCreateRequest"
+            },
+            "example": {
+              "username": "ashutosh_senapati",
+              "email": "ashutosh_senapati@mckinsey.com",
+              "role":"Admin",
+              "phoneno":"9777139671",
+              "fmno":328533,
+              "firstname":"Ashutosh",
+              "lastname":"Senapati",
+              "github":"github.com/ashutoshmck"
+
+            }
+          }
+        }
+      },
+        "responses":{
+          "201":{
+            "description": "User creation successful",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UserModel"
+                },
+                "example": {
+                  "id":0,
+                  "username": "ashutosh_senapati",
+                  "email": "ashutosh_senapati@mckinsey.com",
+                  "role":"Admin",
+                  "phoneno":"9777139671",
+                  "fmno":328533,
+                  "firstname":"Ashutosh",
+                  "lastname":"Senapati",
+                  "github":"github.com/ashutoshmck",
+                  "createdAt":"2023-02-16T19:27:09Z",
+                  "updatedAt":"2023-02-16T19:27:09Z"
+                }
+              }
+            }
+          }
+        }
+      },
+      "put":{
+        "summary": "Update user",
+        "tags": ["Admin"],
+        "requestBody":  {
+          "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/UserModel"
+            },
+            "example": {
+              "id":0,
+              "username": "ashutosh_senapati",
+              "email": "ashutosh_senapati@mckinsey.com",
+              "role":"Admin",
+              "phoneno":"9777139671",
+              "fmno":328533,
+              "firstname":"Ashutosh",
+              "lastname":"Senapati",
+              "github":"github.com/ashutoshmck",
+              "createdAt":"2023-02-16T19:27:09Z",
+              "updatedAt":"2023-02-16T19:27:09Z"
+            }
+          }
+        }
+      },
+        "responses":{
+          "200":{
+            "description": "User update successful",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UserModel"
+                },
+                "example": {
+                  "id":0,
+                  "username": "ashutosh_senapati",
+                  "email": "ashutosh_senapati@mckinsey.com",
+                  "role":"Admin",
+                  "phoneno":"9777139671",
+                  "fmno":328533,
+                  "firstname":"Ashutosh",
+                  "lastname":"Senapati",
+                  "github":"github.com/ashutoshmck",
+                  "createdAt":"2023-02-16T19:27:09Z",
+                  "updatedAt":"2023-02-16T19:27:09Z"
+                }
+              }
+            }
+          }
+        }
+      },
+      "get": {
+        "summary": "Fetch list of users",
+        "tags": ["Admin"],
+        "responses": {
+          "200": {
+            "description": "Successfully fetch users",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/UserModel"
+                  }
+                },
+                "example": [
+                  {
+                    "id":0,
+                    "username": "ashutosh_senapati",
+                    "email": "ashutosh_senapati@mckinsey.com",
+                    "role":"Admin",
+                    "phoneno":"9777139671",
+                    "fmno":328533,
+                    "firstname":"Ashutosh",
+                    "lastname":"Senapati",
+                    "github":"github.com/ashutoshmck",
+                    "createdAt":"2023-02-16T19:27:09Z",
+                    "updatedAt":"2023-02-16T19:27:09Z"
+                  }
+                ]
+              }
+            }
+          }
+        }
+      }
+    },
+      
+    
+    "/dashboard/users/auth": {
+      "post":{
+        "summary": "Login user",
+        "tags": ["User"],
+        "requestBody":  {
+          "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/LoginRequest"
+            },
+            "example": {
+              "username": "admin",
+              "password": "admin"
+
+            }
+          }
+        }
+      },
+        "responses":{
+          "200":{
+            "description": "User login successful",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/LoginResponse"
+                },
+                "example": {
+                  "id":0,
+                  "username": "ashutosh_senapati",
+                  "email": "ashutosh_senapati@mckinsey.com",
+                  "role":"Admin",
+                  "phoneno":"9777139671",
+                  "fmno":328533,
+                  "firstname":"Ashutosh",
+                  "lastname":"Senapati",
+                  "github":"github.com/ashutoshmck",
+                  "createdAt":"2023-02-16T19:27:09Z",
+                  "updatedAt":"2023-02-16T19:27:09Z"
+
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+},
+  "components": {
+    "securitySchemes": {
+      "Bearer": {
+        "name": "Authorization",
+        "in": "header",
+        "description": "JWT Authorization header",
+        "type": "http",
+        "scheme": "bearer",
+        "bearerFormat": "JWT"
+      }
+    },
+    "schemas": {
+      "JWTErrorResponse": {
+        "type": "object",
+        "properties": {
+          "status": {
+            "type": "string"
+          },
+          "message": {
+            "type": "string"
+          },
+          "errorGroup": {
+            "type": "string"
+          },
+          "description": {
+            "type": "object",
+            "properties": {
+              "errorId": {
+                "type": "string"
+              },
+              "details": {
+                "type": "string"
+              },
+              "message": {
+                "type": "string"
+              }
+            }
+          }
+        }
+      },
+      "UserCreateRequest":{
+        "type":"object",
+        "properties": {
+          "username": {
+            "type": "string"
+          },
+          "firstname": {
+            "type": "string"
+          },
+          "lastname": {
+            "type": "string"
+          },
+          "fmno": {
+            "type": "integer"
+          },
+          "email": {
+            "type": "string"
+          },
+          "phoneno": {
+            "type": "string"
+          },
+          "role": {
+            "type": "string"
+          },
+          "github":{
+            "type": "string"
+          }
+        }
+      },
+      "UserModel":{
+        "type":"object",
+        "properties": {
+          "id":{
+            "type": "integer"
+          },
+          "username": {
+            "type": "string"
+          },
+          "firstname": {
+            "type": "string"
+          },
+          "lastname": {
+            "type": "string"
+          },
+          "fmno": {
+            "type": "integer"
+          },
+          "email": {
+            "type": "string"
+          },
+          "phoneno": {
+            "type": "string"
+          },
+          "role": {
+            "type": "string"
+          },
+          "createdAt":{
+            "type": "string"
+          },
+          "updatedAt":{
+            "type": "string"
+          },
+          "github":{
+            "type": "string"
+          }
+        }
+      },
+      "LoginRequest": {
+        "type": "object",
+        "properties": {
+          "username": {
+            "type": "string"
+          },
+          "password": {
+            "type": "string"
+          }
+        }
+      },
+      "LoginResponse": {
+        "type": "object",
+        "properties": {
+          "accessToken": {
+            "type": "string"
+          },
+          "refreshToken": {
+            "type": "string"
+          },
+          "userDetails": {
+            "type": "object",
+            "properties": {
+              "username": {
+                "type": "string"
+              }
+            }
+          }
+        }
+      },
+      "RefreshAccessTokenRequest": {
+        "type": "object",
+        "properties": {
+          "refreshToken": {
+            "type": "string"
+          }
+        }
+      },
+      "RefreshAccessTokenResponse": {
+        "type": "object",
+        "properties": {
+          "accessToken": {
+            "type": "string"
+          }
+        }
+      }
+    }
+  },
+  "tags": []
+}

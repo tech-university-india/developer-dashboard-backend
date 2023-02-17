@@ -17,15 +17,15 @@ module.exports = {
         type: Sequelize.INTEGER,
         primaryKey: true
       },
-      userid: {
+      username: {
         allowNull: false,
-        type: Sequelize.INTEGER,
-        references: {
-          model: 'users',
-          key: 'id'
-        },
-        onUpdate: 'CASCADE',
-        onDelete: 'CASCADE'
+        type: Sequelize.STRING,
+        // references: {
+        //   model: 'users',
+        //   key: 'id'
+        // },
+        // onUpdate: 'CASCADE',
+        // onDelete: 'CASCADE'
       },
       password: {
         type: Sequelize.TEXT

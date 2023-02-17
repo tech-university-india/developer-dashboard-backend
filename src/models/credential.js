@@ -10,15 +10,24 @@ module.exports = (sequelize, DataTypes) => {
      * The `models/index` file will call this method automatically.
      */
     static associate(models) {
-      // // define association here
-      // credential.belongsTo(models.user, {
-      //   foreignKey: 'userid',
-      // });
+
+      // define association here
+      // association between credential and user
+      this.belongsTo(models.user, {
+        foreignKey: 'username'
+      });
     }
   }
   credential.init({
-    userid: DataTypes.INTEGER,
-    password: DataTypes.TEXT
+    username: {
+      type:DataTypes.STRING,
+      allowNull: false,
+      primaryKey: true
+    },
+    password: {
+      type:DataTypes.STRING,
+      allowNull: false
+    }
   }, {
     sequelize,
     modelName: 'credential',

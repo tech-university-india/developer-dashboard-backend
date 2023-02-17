@@ -1,11 +1,12 @@
 
 const Router = require('express').Router();
-const { getUsers, checkAuth } = require('../controllers/dashController');
-const adminController = require('../controllers/adminController');
-const { isAdmin } = require('../middleware/admin_access');
+const { checkAuth } = require('../controllers/dashController');
 
-Router.get('/users', getUsers);
-Router.route('/users/create').post(isAdmin, adminController.createUser);
+const { addMember, getTeam } = require('../controllers/teamController');
+const { teamValidator, getTeamValidator } = require('../middlewares/teamValidator');
+
 Router.post('/users/auth', checkAuth);
+Router.post('/teams/create', teamValidator, addMember);
+Router.get('/teams', getTeamValidator, getTeam);
 
 module.exports = Router;

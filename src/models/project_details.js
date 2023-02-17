@@ -10,9 +10,24 @@ module.exports = (sequelize, DataTypes) => {
      * The `models/index` file will call this method automatically.
      */
     static associate(models) {
-    //   this.hasMany(models.project_events);
-    //   this.hasMany(models.survey);
-    //   this.hasMany(models.teams);
+
+      // association between project_details and project_events
+      this.hasMany(models.project_events, {
+        foreignKey: 'project_id',
+        sourceKey: 'project_id',
+        onDelete: 'CASCADE',
+        onUpdate: 'CASCADE'
+      });
+
+      // association between project_details and teams
+      this.hasOne(models.teams, {
+        foreignKey: 'project_id',
+        sourceKey: 'project_id',
+        onDelete: 'CASCADE',
+        onUpdate: 'CASCADE'
+
+      });
+
     }
   }
   project_details.init({
@@ -25,8 +40,7 @@ module.exports = (sequelize, DataTypes) => {
     jira: DataTypes.TEXT,
     misc: DataTypes.TEXT,
     start_date: DataTypes.DATEONLY,
-    end_date: DataTypes.DATEONLY,
-    pulsescore: DataTypes.INTEGER
+    end_date: DataTypes.DATEONLY
   }, {
     sequelize,
     modelName: 'project_details',

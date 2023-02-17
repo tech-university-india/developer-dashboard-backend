@@ -40,7 +40,7 @@ const refreshAccessToken = async function(refreshToken){
   try{
     const decoded = jwt.verify(refreshToken, config.get('jwtPrivateKey'));
     const {username, role} = decoded;
-    return jwt.sign({username:username, role: role}, config.get('jwtPrivateKey'), {expiresIn: '20m'});
+    return jwt.sign({username:username, role: role}, config.get('jwtPrivateKey'), {expiresIn: '1d'});
   }
   catch(ex){
     return 'Invalid refresh token.';

@@ -10,10 +10,16 @@ module.exports = (sequelize, DataTypes) => {
      * The `models/index` file will call this method automatically.
      */
     static associate(models) {
-    //   // define association here
-    //   this.hasOne(models.question, {
-    //     foreignKey: 'question_id'
-    //   });
+
+      // define association here
+      // association between response and questions
+      this.belongsTo(models.question, {
+        foreignKey: 'question_id',
+        sourceKey: 'question_id',
+        onDelete: 'CASCADE',
+        onUpdate: 'CASCADE'
+      });
+
     }
   }
   response.init({
