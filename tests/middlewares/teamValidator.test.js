@@ -1,4 +1,4 @@
-const validateTeam = require('../../src/middleware/teamValidator');
+const validateTeam = require('../../src/middlewares/teamValidator');
 
 describe('Team Validator', () => {
   describe('teamValidator', () => {

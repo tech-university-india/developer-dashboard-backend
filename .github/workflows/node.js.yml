@@ -15,12 +15,13 @@ jobs:
         node-version: 18.x
         cache: 'npm'
         
-    - name: Install dependencies for testing
-      run: npm install jest
-    - name: Run unit tests
-      run: npm test
+    
     - name: Lint Check
       uses: wearerequired/lint-action@v2.3.0
     - name: Vulnerability Check
       run: npm audit
+    - name: Install dependencies for testing
+      run: npm install jest
+    - name: Run unit tests
+      run: npm test
 

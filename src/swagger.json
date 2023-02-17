@@ -15,7 +15,7 @@
   ],
   "paths": {
     
-    "/dashboard/users/create": {
+    "/admin/users": {
       "post":{
         "summary": "Create user",
         "tags": ["Admin"],
