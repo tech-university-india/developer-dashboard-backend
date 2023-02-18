@@ -284,7 +284,41 @@
             }
           }
         }
+      },
+      "patch":{
+        "summary": "Update team",
+        "tags": ["Teams"],
+        "requestBody":  {
+          "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/UpdateTeamRequestModel"
+            },
+            "example": {
+              "project_id":"12345",
+              "username":"ashutosh_senapati",
+              "role":"manager"
+            }
+          }
+        }
+      },
+        "responses":{
+          "200":{
+            "description": "Team update successful",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UpdateTeamModel"
+                },
+                "example": {
+                  "message": "User updated successfully"
+                }
+              }
+            }
+          }
+        }
       }
+      
     }
 },
   "components": {
@@ -496,7 +530,30 @@
             "type": "string"
           }
         }
+      },
+      "UpdateTeamRequestModel":{
+        "type":"object",
+        "properties": {
+          "project_id": {
+            "type": "string"
+          },
+          "username": {
+            "type": "string"
+          },
+          "role": {
+            "type": "string"
+          }
+        }
+      },
+      "UpdateTeamModel":{
+        "type":"object",
+        "properties": {
+          "message": {
+            "type": "string"
+          }
+        }
       }
+
     }
   },
   "tags": []
