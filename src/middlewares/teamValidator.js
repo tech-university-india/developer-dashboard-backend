@@ -25,6 +25,12 @@ const requestSchema = joi.object({
   }),
 });
 
+const patchSchema = joi.object({
+  project_id: joi.string().required(),
+  username: joi.string().required(),
+  emp_role: joi.alternatives().try(joi.string().valid('developer', 'manager', 'supermanager')),
+  emp_status: joi.alternatives().try(joi.string().valid('rolled off', 'active'))
+}).or('emp_role', 'emp_status');
 
 const teamValidator = (req, res, next) => {
   const { error } = teamSchema.validate(req.body);
@@ -44,8 +50,17 @@ const getTeamValidator = (req, res, next) => {
   }
 };
 
+const patchValidator = (req, res, next) => {
+  const { error } = patchSchema.validate(req.body);
+  if (error) {
+    res.status(400).json({ error: error.details[0].message });
+  } else {
+    next();
+  }
 
-module.exports = { teamValidator, getTeamValidator };
+};
+
+module.exports = { teamValidator, getTeamValidator, patchValidator };
 
 
 

@@ -56,4 +56,29 @@ const getTeam = async (project_id, key, value) => {
   return team;
 };
 
-module.exports = { addMember, getTeam };
+const patchTeam = async (project_id, username, role, status) => {
+  const validProject = await db.project_details.findOne({ where: { project_id: project_id } });
+  if (!validProject) {
+    throw new httpErrors('Invalid project id', 400);
+  }
+  const validUser = await db.user.findOne({ where: { username: username } });
+  if (!validUser) {
+    throw new httpErrors('Invalid username', 400);
+  }
+  const validTeam = await db.teams.findOne({ where: { project_id: project_id, username: username } });
+  if (!validTeam) {
+    throw new httpErrors('No such member in this project', 400);
+  }
+  if (role && status) {
+    const user = await db.teams.update({ role: role, emp_status: status }, { where: { project_id: project_id, username: username } });
+    return user;
+  } else if (role) {
+    const user = await db.teams.update({ role: role }, { where: { project_id: project_id, username: username } });
+    return user;
+  } else {
+    const user = await db.teams.update({ emp_status: status }, { where: { project_id: project_id, username: username } });
+    return user;
+  }
+};
+
+module.exports = { addMember, getTeam, patchTeam };
