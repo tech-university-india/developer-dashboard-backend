@@ -1,0 +1,32 @@
+const db = require('../models/index');
+const httpErrors = require('../../errors/httpErrors');
+
+
+const createSurvey = async (surveyName, project_id, frequency) => {
+  const projectValidated = await db.project_details.findOne({ where: { project_id: project_id } });
+  if (!projectValidated) {
+    throw new httpErrors('Invalid project id', 400);
+  }
+  // eslint-disable-next-line no-unused-vars
+  const updatedSurvey = await db.survey.update({ status: 'inactive' }, { where: { project_id: project_id } });
+  const status = 'active';
+  const survey = await db.survey.create({
+    survey_name: surveyName,
+    survey_id: (project_id + '_' + new Date().getTime()),
+    project_id: project_id,
+    frequency: frequency,
+    status: status
+  });
+  return survey;
+};
+
+const getSurveys = async (project_id) => {
+  const projectValidated = await db.project_details.findOne({ where: { project_id: project_id } });
+  if (!projectValidated) {
+    throw new httpErrors('Invalid project id', 400);
+  }
+  const surveys = await db.survey.findAll({ where: { project_id: project_id } });
+  return surveys;
+};
+
+module.exports = { createSurvey, getSurveys };

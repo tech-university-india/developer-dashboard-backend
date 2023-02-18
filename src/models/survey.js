@@ -31,7 +31,8 @@ module.exports = (sequelize, DataTypes) => {
     survey_id: DataTypes.STRING,
     survey_name: DataTypes.STRING,
     project_id: DataTypes.STRING,
-    frequency: DataTypes.INTEGER
+    frequency: DataTypes.INTEGER,
+    status: DataTypes.STRING
   }, {
     sequelize,
     modelName: 'survey',
