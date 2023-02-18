@@ -35,11 +35,11 @@ const getTeam = async (req, res) => {
   }
 };
 
-const patchTeam = async (req, res) => {
+const updateMember = async (req, res) => {
   try {
     const { project_id, username, emp_role, emp_status } = req.body;
     // eslint-disable-next-line no-unused-vars
-    const user = await teamService.patchTeam(project_id, username, emp_role, emp_status);
+    const user = await teamService.updateMember(project_id, username, emp_role, emp_status);
     res.status(200).json({ message: 'User updated successfully' });
   }
   catch (err) {
@@ -53,4 +53,4 @@ const patchTeam = async (req, res) => {
 };
 
 
-module.exports = { addMember, getTeam, patchTeam };
+module.exports = { addMember, getTeam, updateMember };

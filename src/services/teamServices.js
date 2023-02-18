@@ -56,7 +56,7 @@ const getTeam = async (project_id, key, value) => {
   return team;
 };
 
-const patchTeam = async (project_id, username, role, status) => {
+const updateMember = async (project_id, username, role, status) => {
   const validProject = await db.project_details.findOne({ where: { project_id: project_id } });
   if (!validProject) {
     throw new httpErrors('Invalid project id', 400);
@@ -81,4 +81,4 @@ const patchTeam = async (project_id, username, role, status) => {
   }
 };
 
-module.exports = { addMember, getTeam, patchTeam };
+module.exports = { addMember, getTeam, updateMember };

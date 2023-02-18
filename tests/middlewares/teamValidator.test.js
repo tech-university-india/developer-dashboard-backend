@@ -82,4 +82,49 @@ describe('Team Validator', () => {
       expect(next).toHaveBeenCalled();
     });
   });
+  describe('updateTeamValidator', () => {
+    it('should throw bad request error when project_id is not valid', () => {
+      const req = { body: { project_id: 123, username: 'Balkar', emp_role: 'Developer', emp_status: 'active' } };
+      const res = { status: jest.fn().mockReturnThis(), json: jest.fn() };
+      const next = jest.fn();
+      validateTeam.patchValidator(req, res, next);
+      expect(res.status).toHaveBeenCalledWith(400);
+      expect(res.status().json).toHaveBeenCalledWith({ 'error': '"project_id" must be a string' });
+      expect(next).not.toHaveBeenCalled();
+    });
+    it('should throw bad request error when username is not valid', () => {
+      const req = { body: { project_id: '123', username: 123, emp_role: 'Developer', emp_status: 'active' } };
+      const res = { status: jest.fn().mockReturnThis(), json: jest.fn() };
+      const next = jest.fn();
+      validateTeam.patchValidator(req, res, next);
+      expect(res.status).toHaveBeenCalledWith(400);
+      expect(res.status().json).toHaveBeenCalledWith({ 'error': '"username" must be a string' });
+      expect(next).not.toHaveBeenCalled();
+    });
+    it('should throw bad request error when emp_role is not valid', () => {
+      const req = { body: { project_id: '123', username: 'Balkar', emp_role: '12', emp_status: 'active' } };
+      const res = { status: jest.fn().mockReturnThis(), json: jest.fn() };
+      const next = jest.fn();
+      validateTeam.patchValidator(req, res, next);
+      expect(res.status).toHaveBeenCalledWith(400);
+      expect(res.status().json).toHaveBeenCalledWith({ 'error': '"emp_role" must be one of [developer, manager, supermanager]' });
+      expect(next).not.toHaveBeenCalled();
+    });
+    it('should throw bad request error when emp_status is not valid', () => {
+      const req = { body: { project_id: '123', username: 'Balkar', emp_role: 'developer', emp_status: '12' } };
+      const res = { status: jest.fn().mockReturnThis(), json: jest.fn() };
+      const next = jest.fn();
+      validateTeam.patchValidator(req, res, next);
+      expect(res.status).toHaveBeenCalledWith(400);
+      expect(res.status().json).toHaveBeenCalledWith({ 'error': '"emp_status" must be one of [rolled off, active]' });
+      expect(next).not.toHaveBeenCalled();
+    });
+    it('should call next when all the fields are valid', () => {
+      const req = { body: { project_id: '123', username: 'Balkar', emp_role: 'developer', emp_status: 'active' } };
+      const res = { status: jest.fn().mockReturnThis(), json: jest.fn() };
+      const next = jest.fn();
+      validateTeam.patchValidator(req, res, next);
+      expect(next).toHaveBeenCalled();
+    });
+  });
 });
