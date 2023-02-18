@@ -3,12 +3,13 @@ const httpErrors = require('../../errors/httpErrors');
 const teamService = require('../services/teamServices');
 const addMember = async (req, res) => {
   try {
-    const { project_id, username, emp_role, emp_status } = req.body;
+    const { project_id, username, emp_role } = req.body;
     // console.log(project_id, username, emp_role, emp_status);
-    const teamMember = await teamService.addMember(project_id, username, emp_role, emp_status);
+    const teamMember = await teamService.addMember(project_id, username, emp_role);
     res.status(201).json(teamMember);
   }
   catch (err) {
+    console.log(err);
     if (err instanceof httpErrors) {
       res.status(err.code).json({ message: err.message });
     }

@@ -2,7 +2,6 @@ const joi = require('joi');
 
 const teamSchema = joi.object({
   project_id: joi.string().required(),
-  emp_status: joi.string().valid('rolled off', 'active').required(),
   adder_role: joi.string().valid('manager', 'supermanager').required(),
   emp_role: joi.string().required(),
   username: joi.string().required()

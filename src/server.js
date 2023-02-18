@@ -5,6 +5,7 @@ const projectRouter = require('./routes/projectRouter');
 const eventsRouter = require('./routes/eventsRouter');
 const leavesRouter = require('./routes/leavesRouter');
 const adminRouter = require('./routes/adminRouter');
+const teamRouter = require('./routes/teamRouter');
 
 const app = express();
 const port = 3000;
@@ -28,6 +29,7 @@ app.use('/events', eventsRouter);
 app.use('/leaves', leavesRouter);
 app.use('/dashboard', dashRouter);
 app.use('/projects', projectRouter);
+app.use('/teams', teamRouter);
 
 // app.use('/auth', auth);
 // app.use('/', verifyJWT, (req, res)=>{

@@ -1,7 +1,7 @@
 const db = require('../models/index');
 const httpErrors = require('../../errors/httpErrors');
 
-const addMember = async (project_id, username, role, emp_status) => {
+const addMember = async (project_id, username, role) => {
 
   const validMember = await db.user.findOne({ where: { username: username } });
   if (!validMember) {
@@ -21,7 +21,7 @@ const addMember = async (project_id, username, role, emp_status) => {
     emp_name: 'Balkar',
     username: username,
     role: role,
-    emp_status: emp_status
+    emp_status: 'active'
   });
   return teamMember;
 };

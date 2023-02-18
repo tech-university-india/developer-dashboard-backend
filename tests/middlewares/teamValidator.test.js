@@ -38,17 +38,8 @@ describe('Team Validator', () => {
       expect(res.status().json).toHaveBeenCalledWith({ 'error': '"adder_role" must be one of [manager, supermanager]' });
       expect(next).not.toHaveBeenCalled();
     });
-    it('should throw error when emp_status is not valid', () => {
-      const req = { body: { project_id: '123', username: 'Balkar', adder_role: 'manager', emp_role: 'Developer', emp_status: 'abc' } };
-      const res = { status: jest.fn().mockReturnThis(), json: jest.fn() };
-      const next = jest.fn();
-      validateTeam.teamValidator(req, res, next);
-      expect(res.status).toHaveBeenCalledWith(400);
-      expect(res.status().json).toHaveBeenCalledWith({ 'error': '"emp_status" must be one of [rolled off, active]' });
-      expect(next).not.toHaveBeenCalled();
-    });
     it('should call next when all the fields are valid', () => {
-      const req = { body: { project_id: '123', username: 'Balkar', adder_role: 'manager', emp_role: 'Developer', emp_status: 'active' } };
+      const req = { body: { project_id: '123', username: 'Balkar', adder_role: 'manager', emp_role: 'Developer' } };
       const res = { status: jest.fn().mockReturnThis(), json: jest.fn() };
       const next = jest.fn();
       validateTeam.teamValidator(req, res, next);
