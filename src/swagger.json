@@ -198,8 +198,94 @@
           }
         }
       }
-    }
+    },
 
+    "/teams":{
+      "post":{
+        "summary": "Create team",
+        "tags": ["Teams"],
+        "requestBody":  {
+          "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/TeamRequestModel"
+            },
+            "example": {
+              "project_id":"12345",
+              "username":"ashutosh_senapati",
+              "adder_role":"manager",
+              "emp_role":"developer"
+            }
+          }
+        }
+      },
+        "responses":{
+          "201":{
+            "description": "Team creation successful",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TeamModel"
+                },
+                "example": {
+                  "id": 4,
+                  "project_id": "12345",
+                  "username": "ashutosh_senapati",
+                  "role": "developer",
+                  "emp_status": "active",
+                  "updatedAt": "2023-02-18T17:09:47.067Z",
+                  "createdAt": "2023-02-18T17:09:47.067Z"
+                }
+              }
+            }
+          }
+        }
+      },
+      "get": {
+        "summary": "Fetch list of teams",
+        "tags": ["Teams"],
+        "requestBody":{
+          "content":{
+            "application/json":{
+              "schema":{
+                "$ref":"#/components/schemas/GetTeamRequestModel"
+              },
+              "example":{
+                "project_id":"12345",
+                "key":"role",
+                "value":"developer"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successfully fetch teams",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/TeamModel"
+                  }
+                },
+                "example": [
+                  {
+                    "id": 3,
+                    "project_id": "12345",
+                    "username": "ashutosh_senapati",
+                    "role": "developer",
+                    "emp_status": "active",
+                    "updatedAt": "2023-02-18T17:09:47.067Z",
+                    "createdAt": "2023-02-18T17:09:47.067Z"
+                  }
+                ]
+              }
+            }
+          }
+        }
+      }
+    }
 },
   "components": {
     "securitySchemes": {
@@ -350,6 +436,63 @@
         "type": "object",
         "properties": {
           "accessToken": {
+            "type": "string"
+          }
+        }
+      },
+      "TeamRequestModel":{
+        "type":"object",
+        "properties": {
+          "project_id": {
+            "type": "string"
+          },
+          "username": {
+            "type": "string"
+          },
+          "adder_role": {
+            "type": "string"
+          },
+          "emp_role": {
+            "type": "string"
+          }
+        }
+      },
+      "TeamModel":{
+        "type":"object",
+        "properties": {
+          "id":{
+            "type": "integer"
+          },
+          "project_id": {
+            "type": "string"
+          },
+          "username": {
+            "type": "string"
+          },
+          "role": {
+            "type": "string"
+          },
+          "emp_status": {
+            "type": "string"
+          },
+          "createdAt":{
+            "type": "string"
+          },
+          "updatedAt":{
+            "type": "string"
+          }
+        }
+      },
+      "GetTeamRequestModel":{
+        "type":"object",
+        "properties": {
+          "project_id": {
+            "type": "string"
+          },
+          "key": {
+            "type": "string"
+          },
+          "value": {
             "type": "string"
           }
         }

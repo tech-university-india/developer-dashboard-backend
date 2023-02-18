@@ -35,4 +35,5 @@ const getTeam = async (req, res) => {
   }
 };
 
+
 module.exports = { addMember, getTeam };

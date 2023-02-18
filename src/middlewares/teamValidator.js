@@ -25,6 +25,7 @@ const requestSchema = joi.object({
   }),
 });
 
+
 const teamValidator = (req, res, next) => {
   const { error } = teamSchema.validate(req.body);
   if (error) {
@@ -42,6 +43,7 @@ const getTeamValidator = (req, res, next) => {
     next();
   }
 };
+
 
 module.exports = { teamValidator, getTeamValidator };
 
