@@ -15,6 +15,17 @@ const getSurveyQuestionsSchema = joi.object({
   survey_id: joi.string().required()
 });
 
+//write a schema for postResponses when body is array of objects and object have question_id,rating,description
+const responseSchema = joi.object({
+  username: joi.string().required(),
+  responses: joi.array().items(joi.object({
+    question_id: joi.string().required(),
+    rating: joi.number().required(),
+    description: joi.string().required(),
+  })).required(),
+});
+
+
 //write a schema for postQuestions when body is array of objects
 const postQuestionsSchema = joi.object({
   survey_id: joi.string().required(),
@@ -61,4 +72,13 @@ const getSurveyQuestionsValidator = (req, res, next) => {
   }
 };
 
-module.exports = { createSurveyValidator, getSurveysValidator, postQuestionsValidator, getSurveyQuestionsValidator };
+const responseValidator = (req, res, next) => {
+  const { error } = responseSchema.validate(req.body);
+  if (error) {
+    res.status(400).json({ error: error.details[0].message });
+  } else {
+    next();
+  }
+};
+
+module.exports = { createSurveyValidator, getSurveysValidator, postQuestionsValidator, getSurveyQuestionsValidator, responseValidator };

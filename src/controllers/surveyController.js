@@ -41,7 +41,7 @@ const postQuestions = async (req, res) => {
     res.status(201).json(survey);
   }
   catch (err) {
-    console.log(err);
+    // console.log(err);
     if (err instanceof httpErrors) {
       res.status(err.code).json({ message: err.message });
     }
@@ -58,7 +58,7 @@ const getSurveyQuestions = async (req, res) => {
     res.status(200).json(questions);
   }
   catch (err) {
-    console.log(err);
+    // console.log(err);
     if (err instanceof httpErrors) {
       res.status(err.code).json({ message: err.message });
     }
@@ -68,4 +68,21 @@ const getSurveyQuestions = async (req, res) => {
   }
 };
 
-module.exports = { createSurvey, getSurveys, postQuestions, getSurveyQuestions };
+const postResponses = async (req, res) => {
+  try {
+    const { username, responses } = req.body;
+    const survey = await surveyService.postResponses(username, responses);
+    res.status(201).json(survey);
+  }
+  catch (err) {
+    // console.log(err);
+    if (err instanceof httpErrors) {
+      res.status(err.code).json({ message: err.message });
+    }
+    else {
+      res.status(500).json({ message: 'Internal Server Error' });
+    }
+  }
+};
+
+module.exports = { createSurvey, getSurveys, postQuestions, getSurveyQuestions, postResponses };

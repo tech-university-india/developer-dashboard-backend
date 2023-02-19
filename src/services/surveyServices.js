@@ -75,4 +75,18 @@ const getQuestions = async (project_id, survey_id) => {
   }
 };
 
-module.exports = { createSurvey, getSurveys, postQuestions, getQuestions };
+const postResponses = async (username, responses) => {
+  responses.map(async (response) => {
+    response['username'] = username;
+    response['date'] = new Date();
+  });
+  const questions = responses.map((response) => response.question_id);
+
+  const alreadyResponded = await db.survey_responses.findOne({ where: { username: username, question_id: questions } });
+  if (alreadyResponded) {
+    throw new httpErrors('Already submitted this survey', 400);
+  }
+  const responsesCreated = await db.survey_responses.bulkCreate(responses);
+  return responsesCreated;
+};
+module.exports = { createSurvey, getSurveys, postQuestions, getQuestions, postResponses };
