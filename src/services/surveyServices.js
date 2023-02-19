@@ -47,6 +47,13 @@ const postQuestions = async (survey_id, questions) => {
 };
 
 const getQuestions = async (survey_id) => {
+  if (survey_id === 'latest') {
+    const latestSurvey = await db.survey.findOne({ where: { status: 'active' } });
+    if (!latestSurvey) {
+      throw new httpErrors('No active survey', 400);
+    }
+    survey_id = latestSurvey.survey_id;
+  }
   const surveyValidated = await db.survey.findOne({ where: { survey_id: survey_id } });
   if (!surveyValidated) {
     throw new httpErrors('Invalid survey id', 400);
