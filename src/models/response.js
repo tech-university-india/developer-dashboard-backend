@@ -28,7 +28,7 @@ module.exports = (sequelize, DataTypes) => {
     date: DataTypes.DATE
   }, {
     sequelize,
-    modelName: 'response',
+    modelName: 'survey_responses',
   });
   return response;
 };

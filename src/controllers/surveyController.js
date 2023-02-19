@@ -53,8 +53,8 @@ const postQuestions = async (req, res) => {
 
 const getSurveyQuestions = async (req, res) => {
   try {
-    const { survey_id } = req.query;
-    const questions = await surveyService.getQuestions(survey_id);
+    const { project_id, survey_id } = req.query;
+    const questions = await surveyService.getQuestions(project_id, survey_id);
     res.status(200).json(questions);
   }
   catch (err) {

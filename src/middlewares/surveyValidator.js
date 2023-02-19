@@ -11,6 +11,7 @@ const getSurveysSchema = joi.object({
 });
 
 const getSurveyQuestionsSchema = joi.object({
+  project_id: joi.string().required(),
   survey_id: joi.string().required()
 });
 

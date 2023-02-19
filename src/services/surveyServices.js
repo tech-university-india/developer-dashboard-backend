@@ -46,20 +46,33 @@ const postQuestions = async (survey_id, questions) => {
   return questionsCreated;
 };
 
-const getQuestions = async (survey_id) => {
-  if (survey_id === 'latest') {
-    const latestSurvey = await db.survey.findOne({ where: { status: 'active' } });
-    if (!latestSurvey) {
-      throw new httpErrors('No active survey', 400);
-    }
-    survey_id = latestSurvey.survey_id;
+const getQuestions = async (project_id, survey_id) => {
+  console.log(project_id, survey_id);
+  const projectValidated = await db.project_details.findOne({ where: { project_id: project_id } });
+  if (!projectValidated)
+    throw new httpErrors('Invalid project id', 400);
+
+  if (survey_id === 'all') {
+    const surveys = await db.survey.findAll({ where: { project_id: project_id } });
+    if (!surveys)
+      throw new httpErrors('No surveys found', 400);
+    const survey_ids = surveys.map((survey) => survey.survey_id);
+    const questions = await db.survey_questions.findAll({ where: { survey_id: survey_ids } });
+    return questions;
   }
-  const surveyValidated = await db.survey.findOne({ where: { survey_id: survey_id } });
-  if (!surveyValidated) {
-    throw new httpErrors('Invalid survey id', 400);
+  else if (survey_id === 'latest') {
+    const latestSurvey = await db.survey.findOne({ where: { project_id: project_id, status: 'active' } });
+    if (!latestSurvey)
+      throw new httpErrors('No active survey found', 400);
+    const questions = await db.survey_questions.findAll({ where: { survey_id: latestSurvey.survey_id } });
+    return questions;
+  } else {
+    const surveyValidated = await db.survey.findOne({ where: { survey_id: survey_id } });
+    if (!surveyValidated)
+      throw new httpErrors('Invalid survey id', 400);
+    const questions = await db.survey_questions.findAll({ where: { survey_id: survey_id } });
+    return questions;
   }
-  const questions = await db.survey_questions.findAll({ where: { survey_id: survey_id } });
-  return questions;
 };
 
 module.exports = { createSurvey, getSurveys, postQuestions, getQuestions };
