@@ -11,6 +11,7 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
 
+
       // association between survey and project_details
       this.belongsTo(models.project_details, {
         foreignKey: 'project_id',

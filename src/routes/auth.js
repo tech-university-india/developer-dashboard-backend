@@ -1,33 +1,35 @@
 /* eslint-disable no-mixed-spaces-and-tabs */
 const router = require('express').Router();
 const { validateRequest } = require('../middlewares/auth');
+const {authenticateUser, refreshAccessToken} = require('../controllers/auth.js');
 
-const controller = require('../controllers/auth.js');
-router.post('/', validateRequest,controller);
+router.post('/', validateRequest, authenticateUser);
+router.post('/refresh', refreshAccessToken);
+
 module.exports = router;
 
 
-// const bcrypt = require("bcrypt");
-// const UserAuth = require("../models").userAuth;
-// const _ = require("lodash");
-// const jwt = require("jsonwebtoken");
-// const config = require("config");
-// router.post("/new", async (req, res)=>{
+// const bcrypt = require('bcrypt');
+// const UserAuth = require('../models').userAuth;
+// const _ = require('lodash');
+// const jwt = require('jsonwebtoken');
+// const config = require('config');
+// router.post('/new', async (req, res)=>{
 //   let user = await UserAuth.findOne({
 // 	  where: {
 // 		  username: req.body.username
 // 	  }
 //   });
 //   if(user)
-//     return res.status(200).send("username already exists"); 
+//     return res.status(200).send('username already exists'); 
 	
-//   user = _.pick(req.body, ["username", "password"]);
+//   user = _.pick(req.body, ['username', 'password']);
 //   const salt = await bcrypt.genSalt(10);
 //   user.password = await bcrypt.hash(user.password, salt);
 
 //   await UserAuth.create(user);
   
-//   res.status(201).send(_.pick(user, ["username"]));
+//   res.status(201).send(_.pick(user, ['username']));
 // });
 
 
