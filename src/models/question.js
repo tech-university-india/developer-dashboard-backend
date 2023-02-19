@@ -36,7 +36,7 @@ module.exports = (sequelize, DataTypes) => {
     max_rating: DataTypes.INTEGER
   }, {
     sequelize,
-    modelName: 'question',
+    modelName: 'survey_questions',
   });
   return question;
 };

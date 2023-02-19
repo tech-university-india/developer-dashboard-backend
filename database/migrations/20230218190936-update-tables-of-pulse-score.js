@@ -4,6 +4,7 @@ module.exports = {
     // Rename the responses table to survey_responses
     await queryInterface.renameTable('responses', 'survey_responses');
 
+
     //add unique constraint to survey_id
     await queryInterface.addConstraint('surveys', {
       fields: ['survey_id'],
