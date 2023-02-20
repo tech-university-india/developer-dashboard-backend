@@ -6,10 +6,10 @@ const projectService = require('../services/projectService');
 
 const createProject = async (req, res, next) => {
   try {
-    
+
     const project = await projectService.createProject(req.body);
     res.status(201).json(project);
-  } catch(error) {
+  } catch (error) {
     next();
     if (error instanceof HTTPErrors) {
       res.status(error.code).json({ 'message': error.message });
@@ -24,7 +24,7 @@ const getAllProjects = async (req, res, next) => {
   try {
     const projects = await projectService.getAllProjects();
     res.status(200).json(projects);
-  } catch(error) {
+  } catch (error) {
     next();
     if (error instanceof HTTPErrors) {
       res.status(error.code).json({ 'message': error.message });
@@ -39,7 +39,7 @@ const getProjectById = async (req, res, next) => {
   try {
     const project = await projectService.getProjectById(req.params.project_id);
     res.status(200).json(project);
-  } catch(error) {
+  } catch (error) {
     next();
     if (error instanceof HTTPErrors) {
       res.status(error.code).json({ 'message': error.message });
@@ -55,7 +55,7 @@ const updateProjectById = async (req, res, next) => {
     const project = await projectService.updateProjectById(req.params.project_id, req.body);
     res.status(200).json(project);
   }
-  catch(error) {
+  catch (error) {
     next();
     if (error instanceof HTTPErrors) {
       res.status(error.code).json({ 'message': error.message });
@@ -70,7 +70,7 @@ const deleteProjectById = async (req, res, next) => {
   try {
     const project = await projectService.deleteProjectById(req.params.project_id);
     res.status(200).json(project);
-  } catch(error) {
+  } catch (error) {
     next();
     if (error instanceof HTTPErrors) {
       res.status(error.code).json({ 'message': error.message });

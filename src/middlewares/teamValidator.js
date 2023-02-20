@@ -2,7 +2,6 @@ const joi = require('joi');
 
 const teamSchema = joi.object({
   project_id: joi.string().required(),
-  emp_status: joi.string().valid('rolled off', 'active').required(),
   adder_role: joi.string().valid('manager', 'supermanager').required(),
   emp_role: joi.string().required(),
   username: joi.string().required()
@@ -26,6 +25,13 @@ const requestSchema = joi.object({
   }),
 });
 
+const patchSchema = joi.object({
+  project_id: joi.string().required(),
+  username: joi.string().required(),
+  emp_role: joi.alternatives().try(joi.string().valid('developer', 'manager', 'supermanager')),
+  emp_status: joi.alternatives().try(joi.string().valid('rolled off', 'active'))
+}).or('emp_role', 'emp_status');
+
 const teamValidator = (req, res, next) => {
   const { error } = teamSchema.validate(req.body);
   if (error) {
@@ -44,7 +50,17 @@ const getTeamValidator = (req, res, next) => {
   }
 };
 
-module.exports = { teamValidator, getTeamValidator };
+const patchValidator = (req, res, next) => {
+  const { error } = patchSchema.validate(req.body);
+  if (error) {
+    res.status(400).json({ error: error.details[0].message });
+  } else {
+    next();
+  }
+
+};
+
+module.exports = { teamValidator, getTeamValidator, patchValidator };
 
 
 
