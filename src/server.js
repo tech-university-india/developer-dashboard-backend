@@ -7,6 +7,7 @@ const eventsRouter = require('./routes/eventsRouter');
 const leavesRouter = require('./routes/leavesRouter');
 const adminRouter = require('./routes/adminRouter');
 const teamRouter = require('./routes/teamRouter');
+const cors = require('cors');
 
 const app = express();
 const port = 3000;
@@ -28,6 +29,12 @@ const swaggerDocument = require('./swagger.json');
 //  process.exit(1);
 //}
 
+let corsOptions = {
+  origin: 'http://localhost:3001',
+  optionsSuccessStatus: 200
+};
+
+app.use(cors(corsOptions));
 app.use(express.json());
 app.use(cookieParser());
 

@@ -49,10 +49,10 @@ function isManager(req, res, next){
     return res.status(403).send('Access denied. Unauthorised.');
   next();
 }
-function isSuperManager(req, res, next){
-  if(req.user.role!=='super manager')
+function isLeadership(req, res, next){
+  if(req.user.role!=='leadership')
     return res.status(403).send('Access denied. Unauthorised.');
   next();
 }
 
-module.exports = {validateRequest, verifyJWT, isAdmin, isDeveloper, isManager, isSuperManager};
+module.exports = {validateRequest, verifyJWT, isAdmin, isDeveloper, isManager, isLeadership};

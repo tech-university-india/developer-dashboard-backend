@@ -1,20 +1,20 @@
 const bcrypt = require('bcrypt');
-const UserAuth = require('../models').userAuth;
+const Credential = require('../models').credential;
 const User = require('../models').user;
 const jwt = require('jsonwebtoken');
 const config = require('config');
 
-const userRole = async (username) => {
+const userByUsername = async (username) => {
   return (await User.findOne({
     where: {
       username: username
     }
-  })).dataValues.role;
+  })).dataValues;
 };
 
 const authenticateUser = async function (reqBody) {
   const { username, password } = reqBody;
-  const user = await UserAuth.findOne({
+  const user = await Credential.findOne({
     where: {
       username: username
     }
@@ -28,11 +28,15 @@ const authenticateUser = async function (reqBody) {
   if (!validPassword)
     return 'Invalid id or password.';
 
-  const role = await userRole(username);
+  const {role, firstname, lastname} = await userByUsername(username);
   
   return {
     accessToken: jwt.sign({ username: username, role: role }, config.get('jwtPrivateKey'), {expiresIn: '20m'}),
-    refreshToken: jwt.sign({username: username, role: role}, config.get('jwtPrivateKey'), {expiresIn: '1d'})
+    refreshToken: jwt.sign({username: username, role: role}, config.get('jwtPrivateKey'), {expiresIn: '1d'}),
+    username: username,
+    firstname: firstname,
+    lastname: lastname,
+    userRole: role
   };
 };
 
@@ -47,4 +51,4 @@ const refreshAccessToken = async function(refreshToken){
   }
 };
 
-module.exports = {refreshAccessToken, authenticateUser, userRole};
+module.exports = {refreshAccessToken, authenticateUser};
