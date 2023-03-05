@@ -20,7 +20,7 @@ const getPulse = async (viewer) => {
   let pulse = await db.pulse.findAll({ where: { project_id: projects }, attributes: ['pulse', 'createdAt'] });
   const x_axis = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
   const y_axis = getPulseMap(pulse);
-  return { x_axis, y_axis };
+  return { x_axis, y_axis, title: 'Pulse Check', y: 'Responses', x: 'Month', colors: ['#FF0000', '#FFA500', '#008000'] };
 };
 
 

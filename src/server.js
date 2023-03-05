@@ -1,6 +1,7 @@
 const cookieParser = require('cookie-parser');
 const express = require('express');
 const config = require('config');
+const cors = require('cors');
 const dashRouter = require('./routes/dashRouter');
 const projectRouter = require('./routes/projectRouter');
 const eventsRouter = require('./routes/eventsRouter');
@@ -27,11 +28,14 @@ const swaggerDocument = require('./swagger.json');
 //  console.error('FATAL ERROR: jwtPrivateKey is not defined');
 //  process.exit(1);
 //}
+var corsOptions = {
+  origin: 'http://localhost:3000',
+};
+app.use(cors(corsOptions));
 
 app.use(express.json());
 app.use(cookieParser());
-
-app.use('/auth',auth);
+app.use('/auth', auth);
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
 app.use('/admin', adminRouter);
