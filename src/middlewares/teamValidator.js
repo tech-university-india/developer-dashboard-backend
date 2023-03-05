@@ -1,57 +1,36 @@
 const joi = require('joi');
 
-const teamSchema = joi.object({
-  project_id: joi.string().required(),
-  adder_role: joi.string().valid('manager', 'supermanager').required(),
-  emp_role: joi.string().required(),
-  username: joi.string().required()
-});
+const postTeamSchema = joi.array().items(
+  joi.object({
+    username: joi.string().required(),
+    role: joi.string().required(),
+    key_member: joi.boolean().required(),
+    start_date: joi.date().required(),
+    end_date: joi.date().required(),
+    cost: joi.number().required(),
+  })
+);
 
-const requestSchema = joi.object({
-  project_id: joi.string().required(),
-  key: joi.string().valid('username', 'emp_status', 'role', 'all').required(),
-  value: joi.when('key', {
-    is: 'emp_status',
-    then: joi.string().valid('rolled off', 'active').required(),
-    otherwise: joi.when('key', {
-      is: 'role',
-      then: joi.string().valid('developer', 'manager', 'supermanager').required(),
-      otherwise: joi.when('key', {
-        is: 'all',
-        then: joi.any().required(),
-        otherwise: joi.string().required()
-      })
-    })
-  }),
-});
-
-const patchSchema = joi.object({
-  project_id: joi.string().required(),
-  username: joi.string().required(),
-  emp_role: joi.alternatives().try(joi.string().valid('developer', 'manager', 'supermanager')),
-  emp_status: joi.alternatives().try(joi.string().valid('rolled off', 'active'))
-}).or('emp_role', 'emp_status');
+const patchTeamSchema = joi.array().items(
+  joi.object({
+    role: joi.string(),
+    key_member: joi.boolean(),
+    start_date: joi.date(),
+    end_date: joi.date(),
+    cost: joi.number()
+  })
+);
 
 const teamValidator = (req, res, next) => {
-  const { error } = teamSchema.validate(req.body);
+  const { error } = postTeamSchema.validate(req.body);
   if (error) {
     res.status(400).json({ error: error.details[0].message });
   } else {
     next();
   }
 };
-
-const getTeamValidator = (req, res, next) => {
-  const { error } = requestSchema.validate(req.body);
-  if (error) {
-    res.status(400).json({ error: error.details[0].message });
-  } else {
-    next();
-  }
-};
-
 const patchValidator = (req, res, next) => {
-  const { error } = patchSchema.validate(req.body);
+  const { error } = patchTeamSchema.validate(req.body);
   if (error) {
     res.status(400).json({ error: error.details[0].message });
   } else {
@@ -60,7 +39,7 @@ const patchValidator = (req, res, next) => {
 
 };
 
-module.exports = { teamValidator, getTeamValidator, patchValidator };
+module.exports = { teamValidator, patchValidator };
 
 
 
