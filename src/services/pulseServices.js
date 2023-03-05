@@ -11,8 +11,8 @@ const addPulse = async (project_id, username, pulse) => {
       throw new httpErrors('Pulse already reported for this month', 400);
     }
   }
-  const pulseData = await db.pulse.create({ project_id: project_id, username: username, pulse: pulse });
-  return pulseData;
+  await db.pulse.create({ project_id: project_id, username: username, pulse: pulse });
+  return { message: 'Pulse reported successfully' };
 };
 
 const getPulse = async (viewer) => {

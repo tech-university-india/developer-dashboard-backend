@@ -19,7 +19,7 @@ const addPulse = async (req, res) => {
 
 const getPulse = async (req, res) => {
   try {
-    const { viewer } = req.body;
+    const { viewer } = req.query;
     const pulse = await pulseService.getPulse(viewer);
     res.status(200).json(pulse);
   }
