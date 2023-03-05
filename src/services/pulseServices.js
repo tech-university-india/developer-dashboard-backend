@@ -3,7 +3,7 @@ const db = require('../models/index');
 const { getPulseMap } = require('../utils/pulseMapper');
 
 const addPulse = async (project_id, username, pulse) => {
-  const pulseReported = await db.pulse.findOne({ where: { project_id: project_id, username: username } });
+  const pulseReported = await db.pulse.findAll({ where: { project_id: project_id, username: username } });
   if (pulseReported) {
     const pulse_date = new Date(pulseReported.createdAt);
     const today = new Date();
