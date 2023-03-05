@@ -8,7 +8,7 @@ const adminRouter = require('./routes/adminRouter');
 const teamRouter = require('./routes/teamRouter');
 
 const app = express();
-const port = 3000;
+const port = 8080;
 
 // const {verifyJWT} = require('./middlewares/auth');
 // const auth = require('./routes/auth.js');
