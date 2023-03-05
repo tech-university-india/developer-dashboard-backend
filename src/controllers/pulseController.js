@@ -19,8 +19,8 @@ const addPulse = async (req, res) => {
 
 const getPulse = async (req, res) => {
   try {
-    const { project_id } = req.body;
-    const pulse = await pulseService.getPulse(project_id);
+    const { viewer } = req.body;
+    const pulse = await pulseService.getPulse(viewer);
     res.status(200).json(pulse);
   }
   catch (err) {

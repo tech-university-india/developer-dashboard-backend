@@ -7,7 +7,7 @@ const addPulseSchema = joi.object({
 });
 
 const getPulseSchema = joi.object({
-  project_id: joi.string().required()
+  viewer: joi.string().required()
 });
 
 const addPulseValidator = (req, res, next) => {
@@ -19,7 +19,7 @@ const addPulseValidator = (req, res, next) => {
 };
 
 const getPulseValidator = (req, res, next) => {
-  const { error } = getPulseSchema.validate(req.body);
+  const { error } = getPulseSchema.validate(req.query);
   if (error) {
     return res.status(400).json({ message: error.message });
   }
