@@ -14,10 +14,10 @@ const getTeam = async (project_id) => {
 };
 
 const updateMember = async (project_id, team_members) => {
-  const updatedMembers = team_members.map(async (member) => {
-    const updatedMember = await db.teams.update(member, { where: { project_id: project_id, username: member.username } });
-    return updatedMember;
+  team_members.map((member) => {
+    db.teams.update(member, { where: { project_id: project_id, username: member.username } });
   });
+  const updatedMembers = await db.teams.findAll({ where: { project_id: project_id } });
   return updatedMembers;
 };
 
