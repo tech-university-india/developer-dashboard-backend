@@ -8,9 +8,10 @@ const eventsRouter = require('./routes/eventsRouter');
 const leavesRouter = require('./routes/leavesRouter');
 const adminRouter = require('./routes/adminRouter');
 const teamRouter = require('./routes/teamRouter');
+const pulseRouter = require('./routes/pulseRouter');
 
 const app = express();
-const port = 3000;
+const port = 8080;
 const auth = require('./routes/auth.js');
 
 // const {verifyJWT} = require('./middlewares/auth');
@@ -44,6 +45,7 @@ app.use('/leaves', leavesRouter);
 app.use('/dashboard', dashRouter);
 app.use('/projects', projectRouter);
 app.use('/teams', teamRouter);
+app.use('/pulse', pulseRouter);
 
 app.listen(port, () =>
   console.log(`Dashboard BE listening at http://localhost:${port}`)
