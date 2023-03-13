@@ -31,7 +31,7 @@ module.exports = (sequelize, DataTypes) => {
     }
   }
   project_details.init({
-    project_id: DataTypes.STRING,
+    project_id: DataTypes.UUID,
     project_name: DataTypes.STRING,
     client: DataTypes.STRING,
     poc: DataTypes.STRING,

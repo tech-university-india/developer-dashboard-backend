@@ -3,13 +3,13 @@ const httpErrors = require('../../errors/httpErrors');
 const teamService = require('../services/teamServices');
 const addMember = async (req, res) => {
   try {
-    const { project_id, username, emp_role } = req.body;
-    // console.log(project_id, username, emp_role, emp_status);
-    const teamMember = await teamService.addMember(project_id, username, emp_role);
-    res.status(201).json(teamMember);
+    const { project_id } = req.query;
+    const { team_members } = req.body;
+    const savedTeamMembers = await teamService.addMember(project_id, team_members);
+    res.status(201).json(savedTeamMembers);
   }
   catch (err) {
-    console.log(err);
+    // console.log(err);
     if (err instanceof httpErrors) {
       res.status(err.code).json({ message: err.message });
     }
@@ -21,8 +21,8 @@ const addMember = async (req, res) => {
 
 const getTeam = async (req, res) => {
   try {
-    const { project_id, key, value } = req.body;
-    const team = await teamService.getTeam(project_id, key, value);
+    const { project_id } = req.query;
+    const team = await teamService.getTeam(project_id);
     res.status(200).json(team);
   }
   catch (err) {
@@ -37,12 +37,13 @@ const getTeam = async (req, res) => {
 
 const updateMember = async (req, res) => {
   try {
-    const { project_id, username, emp_role, emp_status } = req.body;
-    // eslint-disable-next-line no-unused-vars
-    const user = await teamService.updateMember(project_id, username, emp_role, emp_status);
-    res.status(200).json({ message: 'User updated successfully' });
+    const { project_id } = req.query;
+    const { team_members } = req.body;
+    const updatedMembers = await teamService.updateMember(project_id, team_members);
+    res.status(200).json(updatedMembers);
   }
   catch (err) {
+    console.log(err);
     if (err instanceof httpErrors) {
       res.status(err.code).json({ message: err.message });
     }

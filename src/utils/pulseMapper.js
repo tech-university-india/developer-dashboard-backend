@@ -2,7 +2,7 @@ const getPulseMap = (array) => {
   let pulse = array.map((item) => {
     const date = new Date(item.createdAt);
     const month = date.getMonth();
-    return { pulse: item.pulse, month: month };
+    return { pulse: item.score, month: month };
   });
   const y_axis = [
     {

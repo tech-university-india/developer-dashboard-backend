@@ -12,7 +12,7 @@ const pulseRouter = require('./routes/pulseRouter');
 
 const app = express();
 const port = 8080;
-const auth = require('./routes/auth.js');
+// const auth = require('./routes/auth.js');
 
 // const {verifyJWT} = require('./middlewares/auth');
 // const auth = require('./routes/auth.js');
@@ -36,7 +36,7 @@ app.use(cors(corsOptions));
 
 app.use(express.json());
 app.use(cookieParser());
-app.use('/auth', auth);
+// app.use('/auth', auth);
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
 app.use('/admin', adminRouter);
@@ -46,6 +46,11 @@ app.use('/dashboard', dashRouter);
 app.use('/projects', projectRouter);
 app.use('/teams', teamRouter);
 app.use('/pulse', pulseRouter);
+
+// app.use('/auth', auth);
+// app.use('/', verifyJWT, (req, res)=>{
+//   res.send('Hello World');
+// });
 
 app.listen(port, () =>
   console.log(`Dashboard BE listening at http://localhost:${port}`)
