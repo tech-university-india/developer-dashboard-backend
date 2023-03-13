@@ -2,27 +2,30 @@
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.createTable('responses', {
+    await queryInterface.createTable('pulse_scores', {
       id: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-      question_id: {
-        type: Sequelize.STRING
+      project_id: {
+        type: Sequelize.UUID,
+        defaultValue: Sequelize.UUIDV4,
+        references: {
+          model: 'project_details',
+          key: 'project_id',
+          onDelete: 'CASCADE',
+          onUpdate: 'CASCADE'
+        },
+        allowNull: false,
+        unique: true
       },
       username: {
         type: Sequelize.STRING
       },
-      rating: {
+      score: {
         type: Sequelize.INTEGER
-      },
-      description: {
-        type: Sequelize.STRING
-      },
-      date: {
-        type: Sequelize.DATE
       },
       createdAt: {
         allowNull: false,
@@ -35,6 +38,6 @@ module.exports = {
     });
   },
   async down(queryInterface, Sequelize) {
-    await queryInterface.dropTable('responses');
+    await queryInterface.dropTable('pulse_scores');
   }
 };

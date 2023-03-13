@@ -36,9 +36,6 @@ module.exports = (sequelize, DataTypes) => {
     client: DataTypes.STRING,
     poc: DataTypes.STRING,
     description: DataTypes.TEXT,
-    github: DataTypes.TEXT,
-    jira: DataTypes.TEXT,
-    misc: DataTypes.TEXT,
     start_date: DataTypes.DATEONLY,
     end_date: DataTypes.DATEONLY
   }, {
