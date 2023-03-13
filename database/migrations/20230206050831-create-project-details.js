@@ -2,24 +2,36 @@
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.createTable('surveys', {
+    await queryInterface.createTable('project_details', {
       id: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-      survey_id: {
-        type: Sequelize.STRING
-      },
-      survey_name: {
-        type: Sequelize.STRING
-      },
       project_id: {
+        type: Sequelize.UUID,
+        defaultValue: Sequelize.UUIDV4,
+        unique: true,
+        allowNull: false
+      },
+      project_name: {
         type: Sequelize.STRING
       },
-      frequency: {
-        type: Sequelize.INTEGER
+      client: {
+        type: Sequelize.STRING
+      },
+      poc: {
+        type: Sequelize.STRING
+      },
+      description: {
+        type: Sequelize.TEXT
+      },
+      start_date: {
+        type: Sequelize.DATE
+      },
+      end_date: {
+        type: Sequelize.DATE
       },
       createdAt: {
         allowNull: false,
@@ -32,6 +44,6 @@ module.exports = {
     });
   },
   async down(queryInterface, Sequelize) {
-    await queryInterface.dropTable('surveys');
+    await queryInterface.dropTable('project_details');
   }
 };

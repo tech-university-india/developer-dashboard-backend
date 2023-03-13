@@ -1,42 +1,36 @@
-/* eslint-disable no-unused-vars */
 'use strict';
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.createTable('users', {
+    await queryInterface.createTable('links', {
       id: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-      username: {
-        type: Sequelize.STRING,
-        unique: true,
-        allowNull: false
+      project_id: {
+        type: Sequelize.UUID,
+        defaultValue: Sequelize.UUIDV4,
+        references: {
+          model: 'project_details',
+          key: 'project_id',
+          onDelete: 'CASCADE',
+          onUpdate: 'CASCADE'
+        },
+        allowNull: false,
+        unique: true
       },
-      fmno: {
-        type: Sequelize.INTEGER
-      },
-      github: {
+      link_name: {
         type: Sequelize.STRING
       },
-      firstname: {
+      url: {
+        type: Sequelize.TEXT
+      },
+      base_url: {
         type: Sequelize.STRING
       },
-      lastname: {
-        type: Sequelize.STRING
-      },
-      email: {
-        type: Sequelize.STRING
-      },
-      phoneno: {
-        type: Sequelize.STRING
-      },
-      role: {
-        type: Sequelize.STRING
-      },
-      password: {
+      token: {
         type: Sequelize.TEXT
       },
       createdAt: {
@@ -50,6 +44,6 @@ module.exports = {
     });
   },
   async down(queryInterface, Sequelize) {
-    await queryInterface.dropTable('users');
+    await queryInterface.dropTable('links');
   }
 };

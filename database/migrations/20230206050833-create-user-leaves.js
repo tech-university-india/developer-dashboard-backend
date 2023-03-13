@@ -2,39 +2,27 @@
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.createTable('teams', {
+    await queryInterface.createTable('user_leaves', {
       id: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-      project_id: {
-        type: Sequelize.STRING,
-        // references: {
-        //   model: 'project_details',
-        //   key: 'project_id'
-        // },
-        allowNull: false,
-        unique: true
-      },
       username: {
         type: Sequelize.STRING,
         references: {
-          model: 'users',
-          key: 'username'
-        },
-        allowNull: false,
-        unique: true
+          model: 'teams',
+          key: 'username',
+          onDelete: 'CASCADE',
+          onUpdate: 'CASCADE'
+        }
       },
-      emp_name: {
-        type: Sequelize.STRING
+      start_date: {
+        type: Sequelize.DATE
       },
-      role: {
-        type: Sequelize.STRING
-      },
-      emp_status: {
-        type: Sequelize.STRING
+      end_date: {
+        type: Sequelize.DATE
       },
       createdAt: {
         allowNull: false,
@@ -47,6 +35,6 @@ module.exports = {
     });
   },
   async down(queryInterface, Sequelize) {
-    await queryInterface.dropTable('teams');
+    await queryInterface.dropTable('user_leaves');
   }
 };
