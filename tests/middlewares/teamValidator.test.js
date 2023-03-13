@@ -5,7 +5,7 @@ describe('Team Validator', () => {
     it('should throw bad request error when any of the fields is not valid', () => {
       const req = {
         query: { project_id: 'abc' },
-        body: { team_members: [{ username: 12, role: 'frontend', key_member: false, start_date: '2020-01-01', end_date: '2020-01-01', cost: 2000 }] },
+        body: { team_members: [{ username: 12, role: 'frontend', key_status: true, start_date: '2020-01-01', end_date: '2020-01-01', cost: 2000 }] },
       };
       const res = { status: jest.fn().mockReturnThis(), json: jest.fn() };
       const next = jest.fn();
@@ -17,7 +17,7 @@ describe('Team Validator', () => {
     it('should call next when all the fields are valid', () => {
       const req = {
         query: { project_id: 'abc' },
-        body: { team_members: [{ username: 'Balkar', role: 'frontend', key_member: false, start_date: '2020-01-01', end_date: '2020-01-01', cost: 2000 }] },
+        body: { team_members: [{ username: 'Balkar', role: 'frontend', key_status: true, start_date: '2020-01-01', end_date: '2020-01-01', cost: 2000 }] },
       };
       const res = { status: jest.fn().mockReturnThis(), json: jest.fn() };
       const next = jest.fn();
@@ -43,14 +43,12 @@ describe('Team Validator', () => {
     it('should call next when all the fields are valid', () => {
       const req = {
         query: { project_id: 'abc' },
-        body: { team_members: [{ username: 'Balkar', role: 'frontend', key_member: false, start_date: '2020-01-01', end_date: '2020-01-01', cost: 2000 }] },
+        body: { team_members: [{ username: 'Balkar', role: 'frontend', key_status: true, start_date: '2020-01-01', end_date: '2020-01-01', cost: 2000 }] },
       };
       const res = { status: jest.fn().mockReturnThis(), json: jest.fn() };
       const next = jest.fn();
       validateTeam.patchValidator(req, res, next);
       expect(next).toHaveBeenCalled();
     });
-
-
   });
 });
