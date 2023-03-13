@@ -2,7 +2,6 @@ const bcrypt = require('bcrypt');
 const Credential = require('../models').credential;
 const User = require('../models').user;
 const jwt = require('jsonwebtoken');
-const config = require('config');
 
 const userByUsername = async (username) => {
   return (await User.findOne({
@@ -31,20 +30,16 @@ const authenticateUser = async function (reqBody) {
   const {role, firstname, lastname} = await userByUsername(username);
   
   return {
-    accessToken: jwt.sign({ username: username, role: role }, config.get('jwtPrivateKey'), {expiresIn: '20m'}),
-    refreshToken: jwt.sign({username: username, role: role}, config.get('jwtPrivateKey'), {expiresIn: '1d'}),
-    username: username,
-    firstname: firstname,
-    lastname: lastname,
-    userRole: role
+    accessToken: jwt.sign({ username: username, role: role, firstname: firstname, lastname:lastname }, process.env.jwtPrivateKey, {expiresIn: '20m'}),
+    refreshToken: jwt.sign({username: username, role: role, firstname: firstname, lastname: lastname}, process.env.jwtPrivateKey, {expiresIn: '1d'}),
   };
 };
 
 const refreshAccessToken = async function(refreshToken){
   try{
-    const decoded = jwt.verify(refreshToken, config.get('jwtPrivateKey'));
+    const decoded = jwt.verify(refreshToken, process.env.jwtPrivateKey);
     const {username, role} = decoded;
-    return jwt.sign({username:username, role: role}, config.get('jwtPrivateKey'), {expiresIn: '1d'});
+    return jwt.sign({username:username, role: role}, process.env.jwtPrivateKey, {expiresIn: '1d'});
   }
   catch(ex){
     return 'Invalid refresh token.';
