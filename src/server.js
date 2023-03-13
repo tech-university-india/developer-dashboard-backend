@@ -7,7 +7,6 @@ const eventsRouter = require('./routes/eventsRouter');
 const leavesRouter = require('./routes/leavesRouter');
 const adminRouter = require('./routes/adminRouter');
 const teamRouter = require('./routes/teamRouter');
-const teamRouter = require('./routes/teamRouter');
 
 const app = express();
 const port = 8080;
@@ -31,7 +30,7 @@ const swaggerDocument = require('./swagger.json');
 app.use(express.json());
 app.use(cookieParser());
 
-app.use('/auth', auth);
+// app.use('/auth', auth);
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
 app.use('/admin', adminRouter);

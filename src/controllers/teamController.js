@@ -9,8 +9,7 @@ const addMember = async (req, res) => {
     res.status(201).json(savedTeamMembers);
   }
   catch (err) {
-    console.log(err);
-    console.log(err);
+    // console.log(err);
     if (err instanceof httpErrors) {
       res.status(err.code).json({ message: err.message });
     }
@@ -44,6 +43,7 @@ const updateMember = async (req, res) => {
     res.status(200).json(updatedMembers);
   }
   catch (err) {
+    console.log(err);
     if (err instanceof httpErrors) {
       res.status(err.code).json({ message: err.message });
     }
