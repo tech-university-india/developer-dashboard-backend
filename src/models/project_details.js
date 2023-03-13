@@ -10,6 +10,7 @@ module.exports = (sequelize, DataTypes) => {
      * The `models/index` file will call this method automatically.
      */
     static associate(models) {
+
       // association between project_details and project_events
       this.hasMany(models.project_events, {
         foreignKey: 'project_id',
@@ -35,9 +36,6 @@ module.exports = (sequelize, DataTypes) => {
     client: DataTypes.STRING,
     poc: DataTypes.STRING,
     description: DataTypes.TEXT,
-    github: DataTypes.TEXT,
-    jira: DataTypes.TEXT,
-    misc: DataTypes.TEXT,
     start_date: DataTypes.DATEONLY,
     end_date: DataTypes.DATEONLY
   }, {

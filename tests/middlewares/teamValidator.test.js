@@ -21,9 +21,11 @@ describe('Team Validator', () => {
       };
       const res = { status: jest.fn().mockReturnThis(), json: jest.fn() };
       const next = jest.fn();
-      validateTeam.teamValidator(req, res, next);
+      validateTeam.patchValidator(req, res, next);
       expect(next).toHaveBeenCalled();
     });
+
+
   });
   describe('updateTeamValidator', () => {
     it('should throw bad request error when any of the fields is not valid', () => {

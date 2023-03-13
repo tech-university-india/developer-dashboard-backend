@@ -10,6 +10,7 @@ module.exports = (sequelize, DataTypes) => {
      * The `models/index` file will call this method automatically.
      */
     static associate(models) {
+
       // association between teams and user
       this.hasMany(models.user, {
         foreignKey: 'username',
@@ -27,6 +28,7 @@ module.exports = (sequelize, DataTypes) => {
         foreignKey: 'username',
         
       });
+
     }
   }
   teams.init({

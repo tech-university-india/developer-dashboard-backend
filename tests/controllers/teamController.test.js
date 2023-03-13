@@ -108,4 +108,38 @@ describe('Team Controller', () => {
 
     });
   });
+  describe('updateMember', () => {
+    it('should update the member of the project', async () => {
+      jest.spyOn(services, 'updateMember').mockResolvedValue({ project_id: 1, emp_name: 'Balkar', username: 'Balkar', role: 'Developer', emp_status: 'Active' });
+      const req = { body: { project_id: 1, emp_name: 'Balkar', username: 'Balkar', role: 'Developer', emp_status: 'Active' } };
+      const res = { status: jest.fn().mockReturnThis(), json: jest.fn() };
+      await controller.updateMember(req, res);
+      expect(res.status).toHaveBeenCalledWith(200);
+      expect(res.json).toHaveBeenCalledWith({ 'message': 'User updated successfully' });
+    });
+    it('should throw internal server error when there is some error at server side', async () => {
+      jest.spyOn(services, 'updateMember').mockRejectedValue(new Error('Internal Server Error'));
+      const req = { body: { project_id: 1, emp_name: 'Balkar', username: 'Balkar', role: 'Developer', emp_status: 'Active' } };
+      const res = { status: jest.fn().mockReturnThis(), json: jest.fn() };
+      await controller.updateMember(req, res);
+      expect(res.status).toHaveBeenCalledWith(500);
+      expect(res.json).toHaveBeenCalledWith({ message: 'Internal Server Error' });
+    });
+    it('should throw http error when project id is not valid', async () => {
+      jest.spyOn(services, 'updateMember').mockRejectedValue(new httpErrors('Invalid project_id', 400));
+      const req = { body: { project_id: 1, emp_name: 'Balkar', username: 'Balkar', role: 'Developer', emp_status: 'Active' } };
+      const res = { status: jest.fn().mockReturnThis(), json: jest.fn() };
+      await controller.updateMember(req, res);
+      expect(res.status).toHaveBeenCalledWith(400);
+      expect(res.json).toHaveBeenCalledWith({ message: 'Invalid project_id' });
+    });
+    it('should throw http error when no member for specific role', async () => {
+      jest.spyOn(services, 'updateMember').mockRejectedValue(new httpErrors('Invalid role', 400));
+      const req = { body: { project_id: 1, emp_name: 'Balkar', username: 'Balkar', role: 'Developer', emp_status: 'Active' } };
+      const res = { status: jest.fn().mockReturnThis(), json: jest.fn() };
+      await controller.updateMember(req, res);
+      expect(res.status).toHaveBeenCalledWith(400);
+      expect(res.json).toHaveBeenCalledWith({ message: 'Invalid role' });
+    });
+  });
 });

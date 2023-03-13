@@ -33,4 +33,26 @@ function validateRequest(req, res, next){
   next();
 }
 
-module.exports = {validateRequest, verifyJWT};
+function isAdmin(req, res, next){  
+  if(req.user.role!=='admin')
+    return res.status(403).send('Access denied. Unauthorised.');
+  next();
+}
+
+function isDeveloper(req, res, next){
+  if(req.user.role!=='developer')
+    return res.status(403).send('Access denied. Unauthorised.');
+  next();
+}
+function isManager(req, res, next){
+  if(req.user.role!=='manager')
+    return res.status(403).send('Access denied. Unauthorised.');
+  next();
+}
+function isSuperManager(req, res, next){
+  if(req.user.role!=='super manager')
+    return res.status(403).send('Access denied. Unauthorised.');
+  next();
+}
+
+module.exports = {validateRequest, verifyJWT, isAdmin, isDeveloper, isManager, isSuperManager};

@@ -10,6 +10,7 @@ const addMember = async (req, res) => {
   }
   catch (err) {
     console.log(err);
+    console.log(err);
     if (err instanceof httpErrors) {
       res.status(err.code).json({ message: err.message });
     }
