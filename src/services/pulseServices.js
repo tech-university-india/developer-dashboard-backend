@@ -16,10 +16,15 @@ const addPulse = async (project_id, username, pulse) => {
 };
 
 const getPulse = async (viewer) => {
-  const projects = await teams.findAll({ where: { username: viewer }, attributes: ['project_id'] });
-  let pulse = await pulse_score.findAll({ where: { project_id: projects[0].dataValues.project_id }, attributes: ['score', 'createdAt'] });
   const x_axis = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
-  const y_axis = getPulseMap(pulse);
+  const projects = await teams.findAll({ where: { username: viewer }, attributes: ['project_id'] });
+  let y_axis;
+  if (!projects || projects.length === 0) {
+    y_axis = getPulseMap([]);
+  } else {
+    let pulse = await pulse_score.findAll({ where: { project_id: projects[0].dataValues.project_id }, attributes: ['score', 'createdAt'] });
+    y_axis = getPulseMap(pulse);
+  }
   return { x_axis, y_axis };
 };
 

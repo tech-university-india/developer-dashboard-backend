@@ -55,15 +55,15 @@ describe('Pulse Mapper', () => {
     const expected = [
       {
         'name': 'Terrible',
-        'data': [1, 1, 0, 0, 0, 1, 1, 0, 0, 0, 1, 1]
+        'data': [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
       },
       {
         'name': 'Ok',
-        'data': [0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0]
+        'data': [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
       },
       {
         'name': 'Good',
-        'data': [0, 0, 0, 1, 1, 0, 0, 0, 1, 1, 0, 0]
+        'data': [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]
       },
     ];
     const result = getPulseMap(pulseData);
