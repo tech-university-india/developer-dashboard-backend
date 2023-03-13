@@ -9,8 +9,7 @@ const adminRouter = require('./routes/adminRouter');
 const teamRouter = require('./routes/teamRouter');
 
 const app = express();
-const port = 3000;
-const auth = require('./routes/auth.js');
+const port = 8080;
 
 // const {verifyJWT} = require('./middlewares/auth');
 // const auth = require('./routes/auth.js');
@@ -31,7 +30,7 @@ const swaggerDocument = require('./swagger.json');
 app.use(express.json());
 app.use(cookieParser());
 
-app.use('/auth',auth);
+// app.use('/auth', auth);
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
 app.use('/admin', adminRouter);
@@ -40,6 +39,11 @@ app.use('/leaves', leavesRouter);
 app.use('/dashboard', dashRouter);
 app.use('/projects', projectRouter);
 app.use('/teams', teamRouter);
+
+// app.use('/auth', auth);
+// app.use('/', verifyJWT, (req, res)=>{
+//   res.send('Hello World');
+// });
 
 app.listen(port, () =>
   console.log(`Dashboard BE listening at http://localhost:${port}`)

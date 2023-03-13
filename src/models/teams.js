@@ -15,7 +15,7 @@ module.exports = (sequelize, DataTypes) => {
       this.hasMany(models.user, {
         foreignKey: 'username',
       });
-      
+
       // association between teams and project_details
       this.belongsTo(models.project_details, {
         foreignKey: 'project_id',
@@ -26,16 +26,19 @@ module.exports = (sequelize, DataTypes) => {
       // association between teams and user_leaves
       this.hasMany(models.user_leaves, {
         foreignKey: 'username',
-        
+
       });
 
     }
   }
   teams.init({
-    project_id: DataTypes.STRING,
+    project_id: DataTypes.UUID,
     username: DataTypes.STRING,
     role: DataTypes.STRING,
-    emp_status: DataTypes.STRING
+    key_status: DataTypes.BOOLEAN,
+    start_date: DataTypes.DATE,
+    end_date: DataTypes.DATE,
+    cost: DataTypes.DOUBLE
   }, {
     sequelize,
     modelName: 'teams',
