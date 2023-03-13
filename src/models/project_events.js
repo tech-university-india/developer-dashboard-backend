@@ -25,8 +25,8 @@ module.exports = (sequelize, DataTypes) => {
     project_id: DataTypes.STRING,
     event_id: DataTypes.STRING,
     event_name: DataTypes.STRING,
-    start_date: DataTypes.DATEONLY,
-    end_date: DataTypes.DATEONLY
+    start_date: DataTypes.DATE,
+    end_date: DataTypes.DATE
   }, {
     sequelize,
     modelName: 'project_events',

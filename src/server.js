@@ -1,6 +1,7 @@
 const cookieParser = require('cookie-parser');
 const express = require('express');
 const config = require('config');
+const cors = require('cors');
 const dashRouter = require('./routes/dashRouter');
 const projectRouter = require('./routes/projectRouter');
 const eventsRouter = require('./routes/eventsRouter');
@@ -10,6 +11,7 @@ const teamRouter = require('./routes/teamRouter');
 
 const app = express();
 const port = 8080;
+app.use(cors());
 
 // const {verifyJWT} = require('./middlewares/auth');
 // const auth = require('./routes/auth.js');
