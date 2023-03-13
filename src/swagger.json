@@ -204,6 +204,18 @@
       "post":{
         "summary": "Create team",
         "tags": ["Teams"],
+        "parameters": [
+          {
+            "name": "project_id",
+            "in": "query",
+            "description": "Project ID",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+
         "requestBody":  {
           "content": {
           "application/json": {
@@ -211,11 +223,15 @@
               "$ref": "#/components/schemas/TeamRequestModel"
             },
             "example": {
-              "project_id":"12345",
-              "username":"ashutosh_senapati",
-              "adder_role":"manager",
-              "emp_role":"developer"
-            }
+              "team_members": [{
+                  "username":"user1",
+                  "role":"backend",
+                  "key_status": true,
+                  "start_date": "07/04/2023",
+                  "end_date": "07/05/2023",
+                  "cost":5000
+              }
+          ]}
           }
         }
       },
@@ -227,14 +243,32 @@
                 "schema": {
                   "$ref": "#/components/schemas/TeamModel"
                 },
+                "example": [
+                  {
+                      "id": 18,
+                      "username": "user1",
+                      "role": "backend",
+                      "key_status": true,
+                      "start_date": "2023-07-03T18:30:00.000Z",
+                      "end_date": "2023-07-04T18:30:00.000Z",
+                      "cost": 5000,
+                      "project_id": "1bc70683-7528-4dc2-bb6a-ca95e65fb08b",
+                      "createdAt": "2023-03-13T08:59:00.803Z",
+                      "updatedAt": "2023-03-13T08:59:00.803Z"
+                  }
+              ]
+              }
+            }
+          },
+          "500":{
+            "description": "Internal server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorModel"
+                },
                 "example": {
-                  "id": 4,
-                  "project_id": "12345",
-                  "username": "ashutosh_senapati",
-                  "role": "developer",
-                  "emp_status": "active",
-                  "updatedAt": "2023-02-18T17:09:47.067Z",
-                  "createdAt": "2023-02-18T17:09:47.067Z"
+                  "message": "Internal server error"
                 }
               }
             }
@@ -244,20 +278,17 @@
       "get": {
         "summary": "Fetch list of teams",
         "tags": ["Teams"],
-        "requestBody":{
-          "content":{
-            "application/json":{
-              "schema":{
-                "$ref":"#/components/schemas/GetTeamRequestModel"
-              },
-              "example":{
-                "project_id":"12345",
-                "key":"role",
-                "value":"developer"
-              }
+        "parameters": [
+          {
+            "name": "project_id",
+            "in": "query",
+            "description": "Project ID",
+            "required": true,
+            "schema": {
+              "type": "string"
             }
           }
-        },
+        ],
         "responses": {
           "200": {
             "description": "Successfully fetch teams",
@@ -271,15 +302,31 @@
                 },
                 "example": [
                   {
-                    "id": 3,
-                    "project_id": "12345",
-                    "username": "ashutosh_senapati",
-                    "role": "developer",
-                    "emp_status": "active",
-                    "updatedAt": "2023-02-18T17:09:47.067Z",
-                    "createdAt": "2023-02-18T17:09:47.067Z"
+                      "id": 18,
+                      "username": "Balkar",
+                      "role": "backend",
+                      "key_status": true,
+                      "start_date": "2023-07-03T18:30:00.000Z",
+                      "end_date": "2023-07-04T18:30:00.000Z",
+                      "cost": 5000,
+                      "project_id": "1bc70683-7528-4dc2-bb6a-ca95e65fb08b",
+                      "createdAt": "2023-03-13T08:59:00.803Z",
+                      "updatedAt": "2023-03-13T08:59:00.803Z"
                   }
-                ]
+              ]
+              }
+            }
+          },
+          "500":{
+            "description": "Internal server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorModel"
+                },
+                "example": {
+                  "message": "Internal server error"
+                }
               }
             }
           }
@@ -288,6 +335,18 @@
       "patch":{
         "summary": "Update team",
         "tags": ["Teams"],
+        "parameters": [
+          {
+            "name": "project_id",
+            "in": "query",
+            "description": "Project ID",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+
         "requestBody":  {
           "content": {
           "application/json": {
@@ -295,9 +354,11 @@
               "$ref": "#/components/schemas/UpdateTeamRequestModel"
             },
             "example": {
-              "project_id":"12345",
-              "username":"ashutosh_senapati",
-              "role":"manager"
+              "team_members":[
+              {
+                  "username": "Balkar",
+                  "role": "frontend"
+              }]
             }
           }
         }
@@ -310,8 +371,31 @@
                 "schema": {
                   "$ref": "#/components/schemas/UpdateTeamModel"
                 },
+                "example": [
+                  {
+                      "id": 18,
+                      "project_id": "1bc70683-7528-4dc2-bb6a-ca95e65fb08b",
+                      "username": "Balkar",
+                      "role": "frontend",
+                      "key_status": true,
+                      "start_date": "2023-07-03T18:30:00.000Z",
+                      "end_date": "2023-07-04T18:30:00.000Z",
+                      "cost": 5000,
+                      "createdAt": "2023-03-13T08:59:00.803Z",
+                      "updatedAt": "2023-03-13T09:01:01.897Z"
+                  }]
+              }
+            }
+          },
+          "500":{
+            "description": "Internal server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorModel"
+                },
                 "example": {
-                  "message": "User updated successfully"
+                  "message": "Internal server error"
                 }
               }
             }
@@ -480,80 +564,22 @@
           "project_id": {
             "type": "string"
           },
-          "username": {
-            "type": "string"
-          },
-          "adder_role": {
-            "type": "string"
-          },
-          "emp_role": {
-            "type": "string"
-          }
-        }
-      },
-      "TeamModel":{
-        "type":"object",
-        "properties": {
-          "id":{
-            "type": "integer"
-          },
-          "project_id": {
-            "type": "string"
-          },
-          "username": {
-            "type": "string"
-          },
-          "role": {
-            "type": "string"
-          },
-          "emp_status": {
-            "type": "string"
-          },
-          "createdAt":{
-            "type": "string"
-          },
-          "updatedAt":{
-            "type": "string"
-          }
-        }
-      },
-      "GetTeamRequestModel":{
-        "type":"object",
-        "properties": {
-          "project_id": {
-            "type": "string"
-          },
-          "key": {
-            "type": "string"
-          },
-          "value": {
-            "type": "string"
-          }
-        }
-      },
-      "UpdateTeamRequestModel":{
-        "type":"object",
-        "properties": {
-          "project_id": {
-            "type": "string"
-          },
-          "username": {
-            "type": "string"
-          },
-          "role": {
-            "type": "string"
-          }
-        }
-      },
-      "UpdateTeamModel":{
-        "type":"object",
-        "properties": {
-          "message": {
-            "type": "string"
+          "team_members": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "username": {
+                  "type": "string"
+                },
+                "role": {
+                  "type": "string"
+                }
+              }
+            }
           }
         }
       }
-
     }
   },
   "tags": []
