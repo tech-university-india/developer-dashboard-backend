@@ -29,7 +29,7 @@ const sendMail = async () => {
         htmlContent: `<h1>How are you feeling in this project ${username}</h1><a href='http://localhost:8080/pulse/add/?username=${username}&project_id=${projects[i].dataValues.project_id}&pulse=5' style='font-size: 50px; text-decoration: none;'>😀</a><a href='http://localhost:8080/pulse/add/?username=${username}&project_id=${projects[i].dataValues.project_id}&pulse=4' style='font-size: 50px; text-decoration: none;'>😊</a><a href='http://localhost:8080/pulse/add/?username=${username}&project_id=${projects[i].dataValues.project_id}&pulse=3' style='font-size: 50px; text-decoration: none;'>😐</a><a href='http://localhost:8080/pulse/add/?username=${username}&project_id=${projects[i].dataValues.project_id}&pulse=2' style='font-size: 50px; text-decoration: none;'>😔</a><a href='http://localhost:8080/pulse/add/?username=${username}&project_id=${projects[i].dataValues.project_id}&pulse=1' style='font-size: 50px; text-decoration: none;'>😩</a>`
       })
         .then((data) => {
-          console.log('API called successfully. Returned data: ' + data);
+          // console.log('API called successfully. Returned data: ' + data);
         })
         .catch((error) => console.error(error));
 

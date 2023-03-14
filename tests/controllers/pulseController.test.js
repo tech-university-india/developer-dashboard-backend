@@ -6,7 +6,7 @@ describe('Pulse Controller', () => {
   describe('addPulse', () => {
     it('should return 201 status code and success message when pulse is added successfully', async () => {
       const req = {
-        body: { project_id: 1, username: 'user1', pulse: 5, },
+        query: { project_id: 1, username: 'user1', pulse: 5, },
       };
       const res = {
         status: jest.fn().mockReturnThis(),
@@ -19,7 +19,7 @@ describe('Pulse Controller', () => {
     });
     it('should return 400 status code and error message when pulse is already reported for the month', async () => {
       const req = {
-        body: { project_id: 1, username: 'user1', pulse: 5, },
+        query: { project_id: 1, username: 'user1', pulse: 5, },
       };
       const res = {
         status: jest.fn().mockReturnThis(),

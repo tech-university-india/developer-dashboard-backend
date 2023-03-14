@@ -4,7 +4,7 @@ const addPulse = async (req, res) => {
   try {
     const { project_id, username, pulse } = req.query;
     const pulseData = await pulseService.addPulse(project_id, username, pulse);
-    res.status(200).json(pulseData);
+    res.status(201).json(pulseData);
   }
   catch (err) {
     if (err instanceof httpErrors) {
