@@ -3,6 +3,10 @@ const { pulse_score, teams } = require('../models/index');
 const { getPulseMap } = require('../utils/pulseMapper');
 
 const addPulse = async (project_id, username, pulse) => {
+  const validUser = await teams.findOne({ where: { project_id: project_id, username: username } });
+  if (!validUser) {
+    throw new httpErrors('Invalid user', 400);
+  }
   const pulseReported = await pulse_score.findOne({ where: { project_id: project_id, username: username } });
   if (pulseReported) {
     const pulse_date = new Date(pulseReported.dataValues.createdAt);

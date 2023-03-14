@@ -9,6 +9,7 @@ const leavesRouter = require('./routes/leavesRouter');
 const adminRouter = require('./routes/adminRouter');
 const teamRouter = require('./routes/teamRouter');
 const pulseRouter = require('./routes/pulseRouter');
+const { sendMail } = require('./utils/pulseMailer');
 
 const app = express();
 const port = 8080;
@@ -46,6 +47,8 @@ app.use('/dashboard', dashRouter);
 app.use('/projects', projectRouter);
 app.use('/teams', teamRouter);
 app.use('/pulse', pulseRouter);
+sendMail();
+
 
 // app.use('/auth', auth);
 // app.use('/', verifyJWT, (req, res)=>{
