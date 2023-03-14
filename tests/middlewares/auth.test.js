@@ -1,7 +1,6 @@
-const {validateRequest, verifyJWT, isAdmin, isDeveloper, isManager, isSuperManager} = require('../../src/middlewares/auth');
+const {validateRequest, verifyJWT, isAdmin, isDeveloper, isManager, isLeadership} = require('../../src/middlewares/auth');
 
 const jwt = require('jsonwebtoken');
-const config = require('config');
 
 describe('validateRequest', ()=>{
   it('should return bad request when username is not provided', ()=>{
@@ -89,7 +88,7 @@ describe('verifyJWT', ()=>{
   it('should call next when valid token is provided', ()=>{
     const mockReq = {
       header: jest.fn().mockReturnValue(
-        jwt.sign({ username: 'abcd' }, config.get('jwtPrivateKey'), {expiresIn: '20m'})
+        jwt.sign({ username: 'abcd' }, process.env.jwtPrivateKey, {expiresIn: '20m'})
       )
     };
     const mockRes = {
@@ -203,8 +202,8 @@ describe('isManager', ()=>{
   });
 });
 
-describe('isSuperManager', ()=>{
-  it('should return 403 status when user is not super manager', ()=>{
+describe('isLeadership', ()=>{
+  it('should return 403 status when user is not of Leadership role', ()=>{
     const mockReq={
       user:{
         role: 'admin'
@@ -216,13 +215,13 @@ describe('isSuperManager', ()=>{
     };
     const next = jest.fn();
 
-    isSuperManager(mockReq, mockRes, next);
+    isLeadership(mockReq, mockRes, next);
     expect(mockRes.status).toBeCalledWith(403);
   });
   it('should call next when user is super manager', ()=>{
     const mockReq={
       user:{
-        role: 'super manager'
+        role: 'leadership'
       }
     };
     const mockRes = {
@@ -231,7 +230,7 @@ describe('isSuperManager', ()=>{
     };
     const next = jest.fn();
 
-    isSuperManager(mockReq, mockRes, next);
+    isLeadership(mockReq, mockRes, next);
     expect(next).toBeCalled();
   });
 });

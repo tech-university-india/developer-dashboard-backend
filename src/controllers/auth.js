@@ -12,7 +12,7 @@ const authenticateUser =  async function(req, res){
     maxAge: 24 * 60 * 60 * 1000 
   });
   
-  res.status(200).send(tokens.accessToken);
+  res.status(200).send({accessToken: tokens.accessToken});
 };
 
 const refreshAccessToken = async function(req, res){

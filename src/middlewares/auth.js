@@ -1,5 +1,4 @@
 const jwt = require('jsonwebtoken');
-const config = require('config');
 const Joi = require('Joi');
 
 function verifyJWT(req, res, next) {
@@ -8,7 +7,7 @@ function verifyJWT(req, res, next) {
     return res.status(401).send('Access denied. No token provided.');
     
   try{
-    const decoded = jwt.verify(token, config.get('jwtPrivateKey'));
+    const decoded = jwt.verify(token, process.env.jwtPrivateKey);
     req.user = decoded;
     next();
   }
@@ -24,7 +23,7 @@ function validateRequest(req, res, next){
   });
     
   const result = schema.validate(req.body);
-    
+
   const {error} = result;
     
   if(error)
@@ -49,10 +48,10 @@ function isManager(req, res, next){
     return res.status(403).send('Access denied. Unauthorised.');
   next();
 }
-function isSuperManager(req, res, next){
-  if(req.user.role!=='super manager')
+function isLeadership(req, res, next){
+  if(req.user.role!=='leadership')
     return res.status(403).send('Access denied. Unauthorised.');
   next();
 }
 
-module.exports = {validateRequest, verifyJWT, isAdmin, isDeveloper, isManager, isSuperManager};
+module.exports = {validateRequest, verifyJWT, isAdmin, isDeveloper, isManager, isLeadership};
