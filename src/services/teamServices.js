@@ -16,7 +16,7 @@ const getTeam = async (project_id) => {
 };
 
 const updateMember = async (project_id, team_members) => {
-  console.log(team_members);
+  // console.log(team_members);
   team_members.map((member) => {
     db.teams.update(member, { where: { project_id: project_id, username: member.username } });
   });

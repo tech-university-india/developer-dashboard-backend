@@ -45,4 +45,4 @@ module.exports = {
 //npx sequelize-cli db:seed --seed 20230313070809-create-projects.js
 
 //command to create a new seed file
-//npx sequelize-cli seed:generate --name create-user
+//npx sequelize-cli seed:generate --name create-pulse

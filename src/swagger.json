@@ -403,6 +403,116 @@
         }
       }
       
+    },
+    "/pulse":{
+      "post":{
+        "summary": "Create pulse",
+        "tags": ["Pulse"],
+        "requestBody":  {
+          "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/CreatePulseRequestModel"
+            },
+            "example": {
+              "project_id": "1bc70683-7528-4dc2-bb6a-ca95e65fb08b",
+              "username": "Balkar",
+              "pulse":5
+            }
+          }
+        }
+        },
+        "responses":{
+          "200":{
+            "description": "Pulse created successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CreatePulseModel"
+                },
+                "example": {
+                  "id": 1,
+                  "project_id": "1bc70683-7528-4dc2-bb6a-ca95e65fb08b",
+                  "username": "Balkar",
+                  "pulse": 5,
+                  "updatedAt": "2021-03-13T09:01:01.897Z",
+                  "createdAt": "2021-03-13T09:01:01.897Z"
+                }
+              }
+            }
+          },
+          "500":{
+            "description": "Internal server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorModel"
+                },
+                "example": {
+                  "message": "Internal server error"
+                }
+              }
+            }
+          }
+        }
+      },
+      "get":{
+        "summary": "Get pulse",
+        "tags": ["Pulse"],
+        "parameters": [
+          {
+            "name": "viewer",
+            "in": "query",
+            "description": "viewer",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses":{
+          "200":{
+            "description": "Pulse fetched successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GetPulseModel"
+                },
+                "example": {
+                  "x_axis": [ "Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec" ],
+                  "y_axis": [
+                      {
+                          "name": "Terrible",
+                          "data": [ 0,0,0,0,0,0,0,0,0,0,0,0]
+                      },
+                      {
+                          "name": "Ok",
+                          "data": [ 0,0,0,0,0,0,0,0,0,0,0,0]
+                      },
+                      {
+                          "name": "Good",
+                          "data": [ 0,0,0,0,0,0,0,0,0,0,0,0]
+                      }
+                  ]
+              }
+              }
+            }
+          },
+          "500":{
+            "description": "Internal server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorModel"
+                },
+                "example": {
+                  "message": "Internal server error"
+                }
+              }
+            }
+          }
+        }
+      }
     }
 },
   "components": {
