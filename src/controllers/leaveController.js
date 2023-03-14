@@ -1,9 +1,9 @@
-const leaveService = require('../services/leave');
+const leaveServices = require('../services/leave');
 
 const createLeave = async (req, res) => {
   try {
     const { username, startDate, endDate } = req.body;
-    const newLeave = await leaveService.createLeave(
+    const newLeave = await leaveServices.createLeave(
       username,
       startDate,
       endDate,
@@ -21,7 +21,7 @@ const createLeave = async (req, res) => {
 const deleteLeave = async (req, res) => {
   try {
     const { id } = req.params;
-    const deleted = await leaveService.deleteLeave(id);
+    const deleted = await leaveServices.deleteLeave(id);
     if (deleted[0] === 0) {
       return res.status(404).json({
         status: 404,
@@ -42,7 +42,7 @@ const updateLeave = async (req, res) => {
   try {
     const { id } = req.params;
     const newLeave = req.body;
-    const updated = await leaveService.updateLeave(id, newLeave);
+    const updated = await leaveServices.updateLeave(id, newLeave);
     if (updated[0] === 0) {
       return res.status(404).json({
         status: 404,
@@ -59,10 +59,10 @@ const updateLeave = async (req, res) => {
   }
 };
 
-const getLeaves = async (req, res) => {
+const getLeavesByProjectId = async (req, res) => {
   try {
-    const { username } = req.params;
-    const leaves = await leaveService.getLeaves(username);
+    const { projectId } = req.params;
+    const leaves = await leaveServices.getLeavesByProjectId(projectId);
     if (leaves.length === 0) {
       return res.status(404).json({
         status: 404,
@@ -79,4 +79,4 @@ const getLeaves = async (req, res) => {
   }
 };
 
-module.exports = { createLeave, deleteLeave, getLeaves, updateLeave }; 
+module.exports = { createLeave, deleteLeave, updateLeave, getLeavesByProjectId }; 
