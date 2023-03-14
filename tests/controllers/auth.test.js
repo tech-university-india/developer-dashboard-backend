@@ -2,8 +2,7 @@
 const {authenticateUser, refreshAccessToken} = require('../../src/controllers/auth');
 jest.mock('../../src/services/auth.js');
 let services = require('../../src/services/auth.js');
-const jwt = require('jsonwebtoken');
-const config = require('config');
+// const jwt = require('jsonwebtoken');
 
 
 
@@ -40,8 +39,7 @@ describe('authenticateUser', ()=>{
     };
 
     services.authenticateUser.mockImplementation(()=>{
-
-      return jwt.sign({ username: 'abc' }, config.get('jwtPrivateKey'), {expiresIn: '20m'});
+      return 'mockAccessToken';
     });
   
     await authenticateUser(mockReq, mockRes);

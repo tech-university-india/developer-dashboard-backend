@@ -1,9 +1,8 @@
 
 const {authenticateUser, refreshAccessToken} = require('../../src/services/auth.js');
-const UserAuth = require('../../src/models').userAuth;
+const UserAuth = require('../../src/models').credential;
 const User = require('../../src/models').user;
 const bcrypt = require('bcrypt');
-const config = require('config');
 const jwt = require('jsonwebtoken');
 
 
@@ -14,8 +13,8 @@ describe('authenticateUser', () => {
       password: 'xyz'
     };
 
-  //   const salt = await bcrypt.genSalt(10);
-  //   const hashedPassword = await bcrypt.hash(mockReqBody.password, salt);
+    const salt = await bcrypt.genSalt(10);
+    const hashedPassword = await bcrypt.hash(mockReqBody.password, salt);
     const returnValue = {
       dataValues: {
         username: 'abc',
@@ -27,8 +26,8 @@ describe('authenticateUser', () => {
     jest.spyOn(User, 'findOne').mockResolvedValue({dataValues: {role:'admin'}});
 
     const tokens = await authenticateUser(mockReqBody);
-    const decodedAccessToken = jwt.verify(tokens.accessToken, config.get('jwtPrivateKey'));
-    const decodedRefreshToken = jwt.verify(tokens.refreshToken, config.get('jwtPrivateKey'));
+    const decodedAccessToken = jwt.verify(tokens.accessToken, process.env.jwtPrivateKey);
+    const decodedRefreshToken = jwt.verify(tokens.refreshToken, process.env.jwtPrivateKey);
     
 
     expect(decodedAccessToken.username).toBe(mockReqBody.username);
@@ -74,11 +73,11 @@ describe('authenticateUser', () => {
 
 describe('refreshAccessToken', ()=>{
   it('should return an access token when valid refresh token is provided.', async()=>{
-    const refreshToken = jwt.sign({username: 'abc', role: 'xyz'}, config.get('jwtPrivateKey'), {expiresIn: '1d'});
+    const refreshToken = jwt.sign({username: 'abc', role: 'xyz'}, process.env.jwtPrivateKey, {expiresIn: '1d'});
     
     const accessToken = await refreshAccessToken(refreshToken);
 
-    const decodedAccessToken = jwt.verify(accessToken, config.get('jwtPrivateKey'));
+    const decodedAccessToken = jwt.verify(accessToken, process.env.jwtPrivateKey);
     expect(decodedAccessToken.username).toBe('abc');
     expect(decodedAccessToken.role).toBe('xyz');
   });
