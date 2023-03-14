@@ -1,10 +1,9 @@
-const eventService = require('../services/event.js');
+const eventServices = require('../services/event.js');
 
 const createEvent = async (req, res) => {
   try {
-    const { eventId, projectId, eventName, startDate, endDate } = req.body;
-    const newEvent = await eventService.createEvent(
-      eventId, 
+    const {projectId, eventName, startDate, endDate } = req.body;
+    const newEvent = await eventServices.createEvent(
       projectId, 
       eventName, 
       startDate, 
@@ -23,7 +22,7 @@ const createEvent = async (req, res) => {
 const getEvents = async (req, res) => {
   try {
     const { projectId } = req.params;
-    const events = await eventService.getEvents(projectId);
+    const events = await eventServices.getEvents(projectId);
     if (events.length === 0) {
       return res.status(404).json({
         status: 404,
@@ -43,7 +42,7 @@ const updateEvent = async (req, res) => {
   try {
     const { id } = req.params;
     const newEvent = req.body;
-    const updated = await eventService.updateEvent(id, newEvent);
+    const updated = await eventServices.updateEvent(id, newEvent);
     if (updated[0] === 0) {
       return res.status(404).json({
         status: 404,
@@ -63,7 +62,7 @@ const updateEvent = async (req, res) => {
 const deleteEvent = async (req, res) => {
   try {
     const { id } = req.params;
-    const deleted = await eventService.deleteEvent(id);
+    const deleted = await eventServices.deleteEvent(id);
     if (deleted[0] === 0) {
       return res.status(404).json({ 
         status: 404, 

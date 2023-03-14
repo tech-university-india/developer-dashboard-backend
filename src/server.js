@@ -13,7 +13,8 @@ const { sendMail } = require('./utils/pulseMailer');
 
 const app = express();
 const port = 8080;
-// const auth = require('./routes/auth.js');
+
+app.use(cors());
 
 // const {verifyJWT} = require('./middlewares/auth');
 // const auth = require('./routes/auth.js');

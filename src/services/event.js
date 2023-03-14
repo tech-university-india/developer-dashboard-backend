@@ -1,9 +1,8 @@
 const db = require('../models');
 const caseMap = require('../../src/utils/caseMapper.js');
 
-const createEvent = async (eventId, projectId, eventName, startDate, endDate) => {
+const createEvent = async (projectId, eventName, startDate, endDate) => {
   const result = await db.project_events.create({
-    event_id: eventId,
     project_id: projectId,
     event_name: eventName,
     start_date: startDate,
