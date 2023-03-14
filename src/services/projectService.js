@@ -1,5 +1,6 @@
 // services for project details
 const db = require('../models');
+const { Op } = require('sequelize');
 const httpErrors = require('../../errors/httpErrors');
 
 // create a new project for project_details model
@@ -23,9 +24,22 @@ const createProject = async (project) => {
 
 // get all projects for project_details model
 
-const getAllProjects = async () => {
-  const projects = await db.project_details.findAll();
-  return projects;
+const getAllProjects = async (page, rowsPerPage) => {
+
+  const pageInt = parseInt(page,10);
+  const rowsPerPageInt = parseInt(rowsPerPage,10);
+
+  const count = await db.project_details.findAndCountAll();
+  const rows = await db.project_details.findAll({
+    where:{
+      id:{
+        [Op.gte]: (pageInt * rowsPerPageInt)+1,
+        [Op.lte]: pageInt*rowsPerPageInt + rowsPerPageInt,
+      }
+    }
+  });
+  console.log(rows.length);
+  return {count ,rows};
 };
 
 // get a project by project_id for project_details model
