@@ -10,9 +10,12 @@ const teamRouter = require('./routes/teamRouter');
 const auth = require('./routes/auth.js');
 const cors = require('cors');
 const {verifyJWT} = require('./middlewares/auth');
+const pulseRouter = require('./routes/pulseRouter');
+const { sendMail } = require('./utils/pulseMailer');
 
 const app = express();
 const port = 8080;
+
 app.use(cors());
 
 if(!process.env.jwtPrivateKey){
@@ -22,8 +25,9 @@ if(!process.env.jwtPrivateKey){
 const swaggerUi = require('swagger-ui-express');
 const swaggerDocument = require('./swagger.json');
 
+
 let corsOptions = {
-  origin: 'http://localhost:3001',
+  origin: 'http://localhost:3000',
   optionsSuccessStatus: 200
 };
 
@@ -33,15 +37,16 @@ app.use(cookieParser());
 
 app.use('/auth', auth);
 app.use(verifyJWT);
-
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
-
 app.use('/admin', adminRouter);
 app.use('/events', eventsRouter);
 app.use('/leaves', leavesRouter);
 app.use('/dashboard', dashRouter);
 app.use('/projects', projectRouter);
 app.use('/teams', teamRouter);
+app.use('/pulse', pulseRouter);
+sendMail();
+
 
 app.listen(port, () =>
   console.log(`Dashboard BE listening at http://localhost:${port}`)
