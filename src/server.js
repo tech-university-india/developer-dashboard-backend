@@ -9,15 +9,11 @@ const adminRouter = require('./routes/adminRouter');
 const teamRouter = require('./routes/teamRouter');
 const auth = require('./routes/auth.js');
 const cors = require('cors');
-const {verifyJWT, isAdmin} = require('./middlewares/auth');
+const {verifyJWT} = require('./middlewares/auth');
 
 const app = express();
-const port = 3000;
-
-
-// const {verifyJWT} = require('./middlewares/auth');
-// const auth = require('./routes/auth.js');
-
+const port = 8080;
+app.use(cors());
 
 if(!process.env.jwtPrivateKey){
   console.error('FATAL ERROR: jwtPrivateKey is not defined');
@@ -35,15 +31,8 @@ app.use(cors(corsOptions));
 app.use(express.json());
 app.use(cookieParser());
 
-
-app.use('/auth',auth);
-
+app.use('/auth', auth);
 app.use(verifyJWT);
-
-app.get('/', [ isAdmin ], (req, res)=>{
-  res.status(200).send('Hi there');
-});
-
 
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 

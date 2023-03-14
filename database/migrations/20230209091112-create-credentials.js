@@ -4,28 +4,25 @@
 module.exports = {
   async up(queryInterface, Sequelize) {
 
-    // await queryInterface.changeColumn("users", "id", {
-    //   type: Sequelize.STRING
-    // });
-
-    await queryInterface.removeColumn('users', 'password');
-
     await queryInterface.createTable('credentials', {
       id: {
         allowNull: false,
-        autoIncrement: true,
-        type: Sequelize.INTEGER,
+        autoIncrement: false,
+        type: Sequelize.UUID,
+        defaultValue: Sequelize.UUIDV4,
         primaryKey: true
       },
       username: {
         allowNull: false,
         type: Sequelize.STRING,
-        // references: {
-        //   model: 'users',
-        //   key: 'id'
-        // },
-        // onUpdate: 'CASCADE',
-        // onDelete: 'CASCADE'
+        references: {
+          model: 'users',
+          key: 'username',
+          onDelete: 'CASCADE',
+          onUpdate: 'CASCADE'
+        },
+        onUpdate: 'CASCADE',
+        onDelete: 'CASCADE'
       },
       password: {
         type: Sequelize.TEXT
@@ -42,11 +39,6 @@ module.exports = {
   },
 
   async down(queryInterface, Sequelize) {
-
-    await queryInterface.addColumn('users', 'password', {
-      type: Sequelize.TEXT
-    });
-
     await queryInterface.dropTable('credentials');
   }
 };

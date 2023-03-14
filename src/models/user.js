@@ -25,17 +25,14 @@ module.exports = (sequelize, DataTypes) => {
         foreignKey: 'username',
         otherKey: 'project_id'
       });
-
     }
   }
   user.init({
     username: DataTypes.STRING,
-    fmno: DataTypes.INTEGER,
-    firstname: DataTypes.STRING,
-    lastname: DataTypes.STRING,
-    github: DataTypes.TEXT,
+    name: DataTypes.STRING,
     email: DataTypes.STRING,
     phoneno: DataTypes.STRING,
+    github: DataTypes.STRING,
     role: DataTypes.STRING,
   }, {
     sequelize,

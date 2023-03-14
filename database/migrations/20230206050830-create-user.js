@@ -1,48 +1,34 @@
+/* eslint-disable no-unused-vars */
 'use strict';
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.createTable('project_details', {
+    await queryInterface.createTable('users', {
       id: {
         allowNull: false,
-        autoIncrement: true,
         primaryKey: true,
-        type: Sequelize.INTEGER
+        type: Sequelize.UUID,
+        defaultValue: Sequelize.UUIDV4
       },
-      project_id: {
+      username: {
         type: Sequelize.STRING,
         unique: true,
         allowNull: false
       },
-      project_name: {
+      name: {
         type: Sequelize.STRING
       },
-      client: {
+      email: {
         type: Sequelize.STRING
       },
-      poc: {
+      phoneno: {
         type: Sequelize.STRING
-      },
-      description: {
-        type: Sequelize.TEXT
       },
       github: {
-        type: Sequelize.TEXT
+        type: Sequelize.STRING
       },
-      jira: {
-        type: Sequelize.TEXT
-      },
-      misc: {
-        type: Sequelize.TEXT
-      },
-      start_date: {
-        type: Sequelize.DATEONLY
-      },
-      end_date: {
-        type: Sequelize.DATEONLY
-      },
-      pulsescore: {
-        type: Sequelize.INTEGER
+      role: {
+        type: Sequelize.STRING
       },
       createdAt: {
         allowNull: false,
@@ -55,6 +41,6 @@ module.exports = {
     });
   },
   async down(queryInterface, Sequelize) {
-    await queryInterface.dropTable('project_details');
+    await queryInterface.dropTable('users');
   }
 };

@@ -2,7 +2,7 @@
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.createTable('project_events', {
+    await queryInterface.createTable('teams', {
       id: {
         allowNull: false,
         autoIncrement: true,
@@ -17,19 +17,33 @@ module.exports = {
           key: 'project_id',
           onDelete: 'CASCADE',
           onUpdate: 'CASCADE'
-        }
+        },
+        allowNull: false,
+        unique: true
       },
-      event_id: {
+      username: {
+        type: Sequelize.STRING,
+        references: {
+          model: 'users',
+          key: 'username'
+        },
+        allowNull: false,
+        unique: true
+      },
+      role: {
         type: Sequelize.STRING
       },
-      event_name: {
-        type: Sequelize.STRING
+      key_status: {
+        type: Sequelize.BOOLEAN
       },
       start_date: {
         type: Sequelize.DATE
       },
       end_date: {
         type: Sequelize.DATE
+      },
+      cost: {
+        type: Sequelize.DOUBLE
       },
       createdAt: {
         allowNull: false,
@@ -42,6 +56,6 @@ module.exports = {
     });
   },
   async down(queryInterface, Sequelize) {
-    await queryInterface.dropTable('project_events');
+    await queryInterface.dropTable('teams');
   }
 };
