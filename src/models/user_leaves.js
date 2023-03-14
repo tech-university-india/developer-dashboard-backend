@@ -21,8 +21,8 @@ module.exports = (sequelize, DataTypes) => {
   }
   user_leaves.init({
     username: DataTypes.STRING,
-    start_date: DataTypes.DATEONLY,
-    end_date: DataTypes.DATEONLY
+    start_date: DataTypes.DATE,
+    end_date: DataTypes.DATE
   }, {
     sequelize,
     modelName: 'user_leaves',
