@@ -19,15 +19,6 @@ const deleteLeave = async (id) => {
   return result;
 };
 
-const getLeaves = async (username) => {
-  const result = await db.user_leaves.findAll({
-    where: {
-      username: username,
-    },
-  });
-  return result;
-};
-
 const updateLeave = async (id, leave) => {
   Object.keys(leave).forEach((key) => {
     leave[caseMap[key]] = leave[key];
@@ -43,5 +34,17 @@ const updateLeave = async (id, leave) => {
   return result;
 };
 
+const getLeavesByProjectId = async (projectId) => {
+  // prevent sql injection
+  const results = await db.sequelize.query(
+    'SELECT * FROM user_leaves WHERE username IN (SELECT username FROM teams WHERE project_id = ?)',
+    {
+      replacements: [projectId],
+    },
+  );
+  
+  return results[0];
+};
 
-module.exports = { createLeave, deleteLeave, getLeaves, updateLeave };
+
+module.exports = { createLeave, deleteLeave, updateLeave, getLeavesByProjectId };
